@@ -50,9 +50,6 @@ def list_districts(state_id: int, db: Session = Depends(get_db)):
 
 @router.get("/taluks/{district_id}", response_model=List[schemas.TalukOut])
 def list_taluks(district_id: int, db: Session = Depends(get_db)):
-    return (
-        db.query(models.Taluk)
-        .filter(models.Taluk.district_id == district_id)
-        .order_by(models.Taluk.name)
-        .all()
-    )
+    from .. import reference_data
+
+    return reference_data.taluks_in_district(district_id)
