@@ -90,6 +90,7 @@ Thumbs.db
 # Python cache files
 /backend/app/__pycache__/
 /backend/app/services/__pycache__
+/backend/app/routers/__pycache__
 __pycache__/
 *.py[cod]
 
