@@ -3,7 +3,7 @@ import {
 } from "react";
 
 import KarnatakaMap
-  from "../../../assets/maps/Karnataka-map.png";
+  from "../../../assets/maps/karnataka-map.png";
 
 import MapPopup
   from "./MapPopup";
@@ -41,10 +41,10 @@ export default function MapPanel({
       typeof taluk === "string"
         ? taluk
         : (
-            taluk?.talukName ||
-            taluk?.name ||
-            "Selected Taluk"
-          );
+          taluk?.talukName ||
+          taluk?.name ||
+          "Selected Taluk"
+        );
 
 
     setPopup({

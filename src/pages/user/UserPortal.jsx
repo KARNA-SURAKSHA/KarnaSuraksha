@@ -36,8 +36,8 @@ import HomeRelief
 import NotificationsTab
   from "./NotificationsTab";
 
-import MapSection
-  from "./dashboard/MapSection";
+import SpreadMapLazy
+  from "../../components/spread/SpreadMapLazy";
 
 import AnalyticsSection
   from "./dashboard/AnalyticsSection";
@@ -535,267 +535,258 @@ export default function UserPortal({
 
       <div className="ud-body">
 
-      {/* =====================================================
+        {/* =====================================================
           SIDEBAR
       ===================================================== */}
 
-      <UserSidebar
+        <UserSidebar
 
-        activePage={
-          activePage
-        }
-
-        onNavigate={
-          handleNavigate
-        }
-
-        onExit={
-          onExit
-        }
-
-        selectedLocation={
-          selectedLocation
-        }
-
-        defaultLocation={
-          defaultLocation
-        }
-
-        onLocationChange={
-          handleLocationChange
-        }
-
-        onResetToDefault={
-          resetToDefault
-        }
-        menuOpen={menuOpen}
-        onCloseMenu={() => setMenuOpen(false)}
-      />
-
-      <div className="ud-column">
-
-        <UserPhoneBar
-          username={username}
-          onNavigate={handleNavigate}
-          menuOpen={menuOpen}
-          onToggleMenu={() =>
-            setMenuOpen((value) => !value)
+          activePage={
+            activePage
           }
+
+          onNavigate={
+            handleNavigate
+          }
+
+          onExit={
+            onExit
+          }
+
+          selectedLocation={
+            selectedLocation
+          }
+
+          defaultLocation={
+            defaultLocation
+          }
+
+          onLocationChange={
+            handleLocationChange
+          }
+
+          onResetToDefault={
+            resetToDefault
+          }
+          menuOpen={menuOpen}
+          onCloseMenu={() => setMenuOpen(false)}
         />
 
+        <div className="ud-column">
+
+          <UserPhoneBar
+            username={username}
+            onNavigate={handleNavigate}
+            menuOpen={menuOpen}
+            onToggleMenu={() =>
+              setMenuOpen((value) => !value)
+            }
+          />
 
 
-      {/* =====================================================
+
+          {/* =====================================================
           MAIN CONTENT
       ===================================================== */}
 
-      <main className="ud-main">
+          <main className="ud-main">
 
-        {/* ===================================================
+            {/* ===================================================
             HOME RELIEF HEADER
         =================================================== */}
 
-        {activePage ===
-          "home-relief" && (
+            {activePage ===
+              "home-relief" && (
 
-          <UserTopHeader
-            username={
-              username
-            }
-            selectedLocation={
-              selectedLocation
-            }
-            portalLabel="
+                <UserTopHeader
+                  username={
+                    username
+                  }
+                  selectedLocation={
+                    selectedLocation
+                  }
+                  portalLabel="
               CITIZEN PORTAL
             "
-            title="
+                  title="
               Home Relief & Supportive Care
             "
-            subtitle="
+                  subtitle="
               Simple home care tips to help you feel better and stay safe.
             "
-          />
+                />
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             DASHBOARD
         =================================================== */}
 
-        {activePage ===
-          "dashboard" && (
+            {activePage ===
+              "dashboard" && (
 
-          <Dashboard
+                <Dashboard
 
-            username={
-              username
-            }
+                  username={
+                    username
+                  }
 
-            defaultLocation={
-              defaultLocation
-            }
+                  defaultLocation={
+                    defaultLocation
+                  }
 
-            selectedLocation={
-              selectedLocation
-            }
+                  selectedLocation={
+                    selectedLocation
+                  }
 
-            dashboardData={
-              dashboardData
-            }
+                  dashboardData={
+                    dashboardData
+                  }
 
-            loading={
-              loading
-            }
+                  loading={
+                    loading
+                  }
 
-            error={
-              error
-            }
+                  error={
+                    error
+                  }
 
-            onNavigate={
-              handleNavigate
-            }
+                  onNavigate={
+                    handleNavigate
+                  }
 
-            onExit={
-              onExit
-            }
-            alertCount={alertCount}
-            onLocationChange={handleLocationChange}
-            onResetToDefault={resetToDefault}
+                  onExit={
+                    onExit
+                  }
+                  alertCount={alertCount}
+                  onLocationChange={handleLocationChange}
+                  onResetToDefault={resetToDefault}
 
-          />
+                />
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             WEEKLY REPORT
         =================================================== */}
 
-        {activePage ===
-          "weekly-report" && (
+            {activePage ===
+              "weekly-report" && (
 
-          <WeeklyReport
-            username={
-              username
-            }
-            selectedLocation={
-              selectedLocation
-            }
-            dashboardData={
-              dashboardData
-            }
-            onBack={() =>
-              setActivePage(
-                "dashboard"
-              )
-            }
-            onNavigate={
-              handleNavigate
-            }
-          />
+                <WeeklyReport
+                  username={
+                    username
+                  }
+                  selectedLocation={
+                    selectedLocation
+                  }
+                  dashboardData={
+                    dashboardData
+                  }
+                  onBack={() =>
+                    setActivePage(
+                      "dashboard"
+                    )
+                  }
+                  onNavigate={
+                    handleNavigate
+                  }
+                />
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             HEALTH OVERVIEW
         =================================================== */}
 
-        {activePage ===
-          "overview" && (
+            {activePage ===
+              "overview" && (
 
-          <HealthOverview
-            dashboardData={
-              dashboardData
-            }
-            loading={
-              loading
-            }
-            error={
-              error
-            }
-          />
+                <HealthOverview
+                  dashboardData={
+                    dashboardData
+                  }
+                  loading={
+                    loading
+                  }
+                  error={
+                    error
+                  }
+                />
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             DISEASE RISK MAP
         =================================================== */}
 
-        {activePage ===
-          "risk-map" && (
+            {activePage ===
+              "risk-map" && (
 
-          <PageContainer>
+                <PageContainer>
 
-            <div
-              className="
+                  <div
+                    className="
                 space-y-6
               "
-            >
+                  >
 
-              <div>
+                    <div>
 
-                <h1
-                  className="
+                      <h1
+                        className="
                     text-[30px]
                     font-bold
                     text-[#13264B]
                   "
-                >
-                  Disease Risk Map
-                </h1>
+                      >
+                        Disease Risk Map
+                      </h1>
 
 
-                <p
-                  className="
+                      <p
+                        className="
                     mt-1
                     text-[14px]
                     text-[#667085]
                   "
-                >
-                  Explore disease risk and surveillance
-                  information for your selected location.
-                </p>
+                      >
+                        Explore disease risk and surveillance
+                        information for your selected location.
+                      </p>
 
-              </div>
+                    </div>
 
+                    <SpreadMapLazy
+                      highlightTaluk={
+                        selectedLocation?.talukName || ""
+                      }
+                    />
 
-              {talukId ? (
+                  </div>
 
-                <MapSection
-                  taluk={
-                    selectedLocation
-                  }
-                />
-
-              ) : (
-
-                <NoLocation />
+                </PageContainer>
 
               )}
 
-            </div>
 
-          </PageContainer>
-
-        )}
-
-
-        {/* ===================================================
+            {/* ===================================================
             ANALYTICS
         =================================================== */}
 
-        {activePage ===
-          "analytics" && (
+            {activePage ===
+              "analytics" && (
 
-          <PageContainer>
+                <PageContainer>
 
-            {loading ? (
+                  {loading ? (
 
-              <div
-                className="
+                    <div
+                      className="
                   rounded-3xl
                   border
                   border-[#E7E2D8]
@@ -803,10 +794,10 @@ export default function UserPortal({
                   p-12
                   text-center
                 "
-              >
+                    >
 
-                <div
-                  className="
+                      <div
+                        className="
                     mx-auto
                     h-10
                     w-10
@@ -816,23 +807,23 @@ export default function UserPortal({
                     border-[#E8E2D8]
                     border-t-[#0B7A33]
                   "
-                />
+                      />
 
-                <p
-                  className="
+                      <p
+                        className="
                     mt-4
                     text-gray-500
                   "
-                >
-                  Loading analytics...
-                </p>
+                      >
+                        Loading analytics...
+                      </p>
 
-              </div>
+                    </div>
 
-            ) : error ? (
+                  ) : error ? (
 
-              <div
-                className="
+                    <div
+                      className="
                   rounded-2xl
                   border
                   border-red-200
@@ -841,180 +832,180 @@ export default function UserPortal({
                   py-4
                   text-red-700
                 "
-              >
-                {error}
-              </div>
+                    >
+                      {error}
+                    </div>
 
-            ) : dashboardData ? (
+                  ) : dashboardData ? (
 
-              <div
-                className="
+                    <div
+                      className="
                   space-y-6
                 "
-              >
+                    >
 
-                <div>
+                      <div>
 
-                  <h1
-                    className="
+                        <h1
+                          className="
                       text-[30px]
                       font-bold
                       text-[#13264B]
                     "
-                  >
-                    Analytics
-                  </h1>
+                        >
+                          Analytics
+                        </h1>
 
 
-                  <p
-                    className="
+                        <p
+                          className="
                       mt-1
                       text-[14px]
                       text-[#7A8598]
                     "
-                  >
-                    Disease surveillance statistics
-                    and trends for your selected location.
-                  </p>
+                        >
+                          Disease surveillance statistics
+                          and trends for your selected location.
+                        </p>
 
-                </div>
-
-
-                <AnalyticsSection
-                  dashboardData={
-                    dashboardData
-                  }
-                />
+                      </div>
 
 
-                <DiseaseDistribution
-                  dashboardData={
-                    dashboardData
-                  }
-                />
-
-              </div>
-
-            ) : (
-
-              <NoLocation />
-
-            )}
-
-          </PageContainer>
-
-        )}
+                      <AnalyticsSection
+                        dashboardData={
+                          dashboardData
+                        }
+                      />
 
 
-        {/* ===================================================
+                      <DiseaseDistribution
+                        dashboardData={
+                          dashboardData
+                        }
+                      />
+
+                    </div>
+
+                  ) : (
+
+                    <NoLocation />
+
+                  )}
+
+                </PageContainer>
+
+              )}
+
+
+            {/* ===================================================
             PRECAUTIONS
         =================================================== */}
 
-        {activePage ===
-          "precautions" && (
+            {activePage ===
+              "precautions" && (
 
-          <div className="w-full">
+                <div className="w-full">
 
-            {talukId ? (
+                  {talukId ? (
 
-              <PrecautionarySection
+                    <PrecautionarySection
 
-                talukId={
-                  selectedLocation?.talukId
-                }
+                      talukId={
+                        selectedLocation?.talukId
+                      }
 
-                talukName={
-                  selectedLocation?.talukName
-                }
+                      talukName={
+                        selectedLocation?.talukName
+                      }
 
-                districtName={
-                  selectedLocation?.districtName
-                }
+                      districtName={
+                        selectedLocation?.districtName
+                      }
 
-                dashboardData={
-                  dashboardData
-                }
+                      dashboardData={
+                        dashboardData
+                      }
 
-                loading={
-                  loading
-                }
+                      loading={
+                        loading
+                      }
 
-                error={
-                  error
-                }
+                      error={
+                        error
+                      }
 
-                username={
-                  username
-                }
+                      username={
+                        username
+                      }
 
-              />
+                    />
 
-            ) : (
+                  ) : (
 
-              <NoLocation />
+                    <NoLocation />
 
-            )}
+                  )}
 
-          </div>
+                </div>
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             NOTIFICATIONS
         =================================================== */}
 
-        {activePage ===
-          "notifications" && (
+            {activePage ===
+              "notifications" && (
 
-          <PageContainer>
+                <PageContainer>
 
-            {talukId ? (
+                  {talukId ? (
 
-              <NotificationsTab
-                selectedLocation={
-                  selectedLocation
-                }
-              />
+                    <NotificationsTab
+                      selectedLocation={
+                        selectedLocation
+                      }
+                    />
 
-            ) : (
+                  ) : (
 
-              <NoLocation />
+                    <NoLocation />
 
-            )}
+                  )}
 
-          </PageContainer>
+                </PageContainer>
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             HOME RELIEF
         =================================================== */}
 
-        {activePage ===
-          "home-relief" && (
+            {activePage ===
+              "home-relief" && (
 
-          <HomeRelief
-            onGoMedicalAssistant={() =>
-              setActivePage(
-                "medical-chat"
-              )
-            }
-          />
+                <HomeRelief
+                  onGoMedicalAssistant={() =>
+                    setActivePage(
+                      "medical-chat"
+                    )
+                  }
+                />
 
-        )}
+              )}
 
 
-        {/* ===================================================
+            {/* ===================================================
             MEDICAL ASSISTANT
         =================================================== */}
 
-        {activePage ===
-          "medical-chat" && (
+            {activePage ===
+              "medical-chat" && (
 
-          <div
-            className="
+                <div
+                  className="
               min-h-screen
               bg-white
               px-3
@@ -1025,24 +1016,24 @@ export default function UserPortal({
               md:pt-[26px]
               lg:pr-[48px]
             "
-          >
+                >
 
-            <MedicalChatbot
-              username={
-                username
-              }
-              selectedLocation={
-                selectedLocation
-              }
-            />
+                  <MedicalChatbot
+                    username={
+                      username
+                    }
+                    selectedLocation={
+                      selectedLocation
+                    }
+                  />
 
-          </div>
+                </div>
 
-        )}
+              )}
 
-      </main>
+          </main>
 
-      </div>
+        </div>
 
       </div>
 

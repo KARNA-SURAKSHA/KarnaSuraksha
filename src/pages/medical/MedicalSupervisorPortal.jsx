@@ -146,8 +146,8 @@ function getISOWeekFromDate(
 
   utcDate.setUTCDate(
     utcDate.getUTCDate() +
-      4 -
-      day
+    4 -
+    day
   );
 
   const yearStart =
@@ -171,12 +171,12 @@ function getISOWeekFromDate(
         ) +
         1
       ) /
-        7
+      7
     );
 
   return (
     utcDate.getUTCFullYear() *
-      100 +
+    100 +
     week
   );
 }
@@ -232,7 +232,7 @@ function buildAvailableWeeks(
     const year =
       Math.floor(
         numericValue /
-          100
+        100
       );
 
     const week =
@@ -339,10 +339,9 @@ function buildActivityLogs(
             `${report?.disease || "Disease"} report received`,
 
           detail:
-            `${report?.taluk_name || "Kodagu"} · ${
-              report?.cases_this_week ??
-              report?.current_cases ??
-              0
+            `${report?.taluk_name || "Kodagu"} · ${report?.cases_this_week ??
+            report?.current_cases ??
+            0
             } cases`,
         })
       );
@@ -562,7 +561,7 @@ export default function MedicalSupervisorPortal({
           });
 
         } catch (
-          e
+        e
         ) {
 
           console.error(
@@ -572,7 +571,7 @@ export default function MedicalSupervisorPortal({
 
           setError(
             e?.message ||
-              "Unable to load Medical Supervisor data."
+            "Unable to load Medical Supervisor data."
           );
 
         } finally {
@@ -693,17 +692,17 @@ export default function MedicalSupervisorPortal({
     Number(
       data.overview
         ?.high_risk_alerts ||
-        0
+      0
     ) +
     Number(
       data.overview
         ?.pending_emerging_reviews ||
-        0
+      0
     ) +
     Number(
       data.overview
         ?.pending_agent_submissions ||
-        0
+      0
     );
 
 
@@ -958,7 +957,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "overview" && (
+        "overview" && (
 
           <Overview
 
@@ -1002,7 +1001,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "reports" && (
+        "reports" && (
 
           <DiseaseReports
 
@@ -1028,12 +1027,16 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "risk-map" && (
+        "risk-map" && (
 
           <RiskMap
 
             data={
               data.riskMap
+            }
+
+            districtName={
+              districtName
             }
 
           />
@@ -1048,7 +1051,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "analytics" && (
+        "analytics" && (
 
           <SurveillanceAnalytics
 
@@ -1068,7 +1071,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "agents" && (
+        "agents" && (
 
           <AgentOversight
 
@@ -1115,7 +1118,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "alerts" && (
+        "alerts" && (
 
           <Alerts
 
@@ -1149,7 +1152,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "activity" && (
+        "activity" && (
 
           <ActivityLogs
 
@@ -1173,7 +1176,7 @@ export default function MedicalSupervisorPortal({
 
       {
         tab ===
-          "home-relief" && (
+        "home-relief" && (
 
           <HomeReliefManagement />
 

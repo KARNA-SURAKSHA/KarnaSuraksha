@@ -100,6 +100,13 @@ from .routers.admin_report_management import (
     router as admin_report_management_router,
 )
 
+# ============================================================
+# DISEASE SPREAD MAP (additive feature)
+# ============================================================
+
+from .spread.router import (
+    router as spread_router,
+)
 
 # ============================================================
 # DATABASE INITIALIZATION
@@ -298,6 +305,13 @@ app.include_router(
     emerging_router
 )
 
+# ============================================================
+# DISEASE SPREAD MAP
+# ============================================================
+
+app.include_router(
+    spread_router
+)
 
 # ============================================================
 # HEALTH CHECK

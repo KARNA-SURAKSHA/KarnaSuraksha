@@ -43,4 +43,14 @@ def initialize_feature():
     created and managed from the Admin portal (Medical Supervisor
     Management).
     """
-    _seed_diseases_firestore()
+    try:
+        _seed_diseases_firestore()
+    except Exception as exc:  # noqa: BLE001
+        # Do not let an unreachable Firestore stop the whole API from booting
+        # (login, reports and the spread map only need the local database).
+        print(
+            "\n[startup] WARNING: could not seed the disease registry in Firestore:\n"
+            f"          {type(exc).__name__}: {str(exc).splitlines()[0] if str(exc) else ''}\n"
+            "          Pages that read Firestore (districts / disease lists) will fail\n"
+            "          until Firestore is enabled for the Firebase project.\n"
+        )

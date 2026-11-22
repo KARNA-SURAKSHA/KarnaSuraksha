@@ -7,9 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:frontend": "vite",
+    "dev:backend": "node scripts/start-backend.mjs",
+    "dev:all": "concurrently -k -n API,WEB -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "start": "node scripts/setup.mjs && npm run dev:all",
+    "setup": "node scripts/setup.mjs"
   },
   "dependencies": {
+    "@deck.gl/aggregation-layers": "^9.3.11",
+    "@deck.gl/core": "^9.3.11",
+    "@deck.gl/layers": "^9.3.11",
+    "@deck.gl/react": "^9.3.11",
     "@tailwindcss/vite": "^4.3.3",
     "firebase": "^13.4.0",
     "framer-motion": "^13.0.0",
@@ -31,7 +40,8 @@
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.3",
     "globals": "^17.7.0",
-    "vite": "^8.2.0"
+    "vite": "^8.2.0",
+    "concurrently": "^9.1.0"
   },
   "overrides": {
     "@grpc/grpc-js": "^1.14.7"

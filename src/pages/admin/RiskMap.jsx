@@ -5,7 +5,6 @@ import {
 } from "react";
 
 import {
-  MapPinned,
   AlertCircle,
 } from "lucide-react";
 
@@ -14,8 +13,8 @@ import {
   DISEASES,
 } from "../../api";
 
-import TaluqMap from "../../components/TaluqMap";
 import RiskBadge from "../../components/RiskBadge";
+import SpreadMapLazy from "../../components/spread/SpreadMapLazy";
 
 export default function RiskMap({
   location,
@@ -29,8 +28,12 @@ export default function RiskMap({
   const [error, setError] =
     useState("");
 
-  const [selectedId, setSelectedId] =
+  const [selectedId] =
     useState(location.taluk?.id || null);
+
+  // taluk picked on the real map (map -> Selected Area panel)
+  const [mapPick, setMapPick] =
+    useState(null);
 
   useEffect(() => {
 
@@ -59,9 +62,9 @@ export default function RiskMap({
     () =>
       disease
         ? predictions.filter(
-            (p) =>
-              p.disease === disease
-          )
+          (p) =>
+            p.disease === disease
+        )
         : predictions,
     [predictions, disease]
   );
@@ -178,28 +181,30 @@ export default function RiskMap({
 
         </div>
 
-        <select
-          value={disease}
-          onChange={(e) =>
-            setDisease(e.target.value)
-          }
-          className="rounded-xl border border-[#E8E2D8] bg-white px-3 py-2.5 text-[13px] text-[#1F3144]"
-        >
+        <div className="flex items-center gap-3">
+          <select
+            value={disease}
+            onChange={(e) =>
+              setDisease(e.target.value)
+            }
+            className="rounded-xl border border-[#E8E2D8] bg-white px-3 py-2.5 text-[13px] text-[#1F3144]"
+          >
 
-          <option value="">
-            All Diseases
-          </option>
-
-          {DISEASES.map((d) => (
-            <option
-              key={d}
-              value={d}
-            >
-              {d}
+            <option value="">
+              All Diseases
             </option>
-          ))}
 
-        </select>
+            {DISEASES.map((d) => (
+              <option
+                key={d}
+                value={d}
+              >
+                {d}
+              </option>
+            ))}
+
+          </select>
+        </div>
 
       </div>
 
@@ -209,86 +214,37 @@ export default function RiskMap({
         </div>
       )}
 
-      <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_330px] gap-5">
-
-        <div className="bg-white rounded-2xl border border-[#E8E2D8] p-4 sm:p-6 min-h-[560px] flex items-center justify-center">
-
-          {entries.length ? (
-
-            <div className="max-w-full overflow-auto">
-
-              <TaluqMap
-                entries={entries}
-                onSelectTaluk={(id) =>
-                  setSelectedId(id)
-                }
-              />
-
-            </div>
-
-          ) : (
-
-            <div className="text-center text-[#7A8598] max-w-[320px]">
-
-              <MapPinned
-                size={28}
-                className="mx-auto mb-3 text-[#9A9489]"
-              />
-
-              <p className="font-semibold text-[#526073]">
-                No prediction data for this scope
-              </p>
-
-              <p className="text-[12px] mt-1">
-                Run a prediction or choose a broader geographic selection.
-              </p>
-
-            </div>
-
-          )}
-
-        </div>
+      <div className="space-y-5">
+        <SpreadMapLazy
+          district={location.district?.name || ""}
+          highlightTaluk={location.taluk?.name || ""}
+          disease={disease}
+          onDiseaseChange={setDisease}
+          onTalukSelect={(name) => {
+            const hit = entries.find((e) => e.taluk_name === name);
+            if (hit) setMapPick(hit.taluk_id);
+          }}
+        />
 
         <div className="bg-white rounded-2xl border border-[#E8E2D8] p-5">
-
           <div className="flex items-center gap-2 mb-4">
-
-            <AlertCircle
-              size={18}
-              className="text-[#0B7A33]"
-            />
-
+            <AlertCircle size={18} className="text-[#0B7A33]" />
             <h3 className="font-semibold text-[15px] text-[#1F3144]">
               Selected Area
             </h3>
-
           </div>
-
-          {effectiveSelectedId &&
-          entries.find(
-            (e) =>
-              e.taluk_id ===
-              effectiveSelectedId
-          ) ? (
-
-            <RiskDetails
-              entry={entries.find(
-                (e) =>
-                  e.taluk_id ===
-                  effectiveSelectedId
-              )}
-            />
-
-          ) : (
-
-            <p className="text-[13px] leading-5 text-[#7A8598]">
-              Select a taluk on the map to inspect current and predicted cases.
-            </p>
-
-          )}
-
+          {(() => {
+            const pickedId = mapPick || effectiveSelectedId;
+            const picked = entries.find((e) => e.taluk_id === pickedId);
+            return picked ? (
+              <RiskDetails entry={picked} />
+            ) : (
+              <p className="text-[13px] leading-5 text-[#7A8598]">
+                Click a taluk on the map or in the list to inspect current and predicted cases.
+              </p>
+            );
+          })()}
         </div>
-
       </div>
 
     </div>

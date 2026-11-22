@@ -1,5 +1,5 @@
 import { X, MapPinned, Activity } from "lucide-react";
-import KarnatakaMap from "../../../assets/maps/Karnataka-map.png";
+import KarnatakaMap from "../../../assets/maps/karnataka-map.png";
 
 export default function SpreadMapModal({ onClose }) {
   return (
