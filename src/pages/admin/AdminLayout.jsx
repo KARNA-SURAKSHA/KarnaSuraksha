@@ -11,6 +11,9 @@ import AdminHeader
 import AdminLocationSelector
   from "../../components/admin/AdminLocationSelector";
 
+import AdminFooter
+  from "../../components/admin/AdminFooter";
+
 
 export default function AdminLayout({
   nav,
@@ -22,6 +25,12 @@ export default function AdminLayout({
   onLocationChange,
   children,
 }) {
+
+  const [
+    sidebarOpen,
+    setSidebarOpen,
+  ] =
+    useState(false);
 
   const [
     locationOpen,
@@ -40,6 +49,10 @@ export default function AdminLayout({
         activeKey={activeKey}
         onNavigate={onNavigate}
         onExit={onExit}
+        open={sidebarOpen}
+        onClose={() =>
+          setSidebarOpen(false)
+        }
       />
 
 
@@ -53,6 +66,9 @@ export default function AdminLayout({
             setLocationOpen(true)
           }
           onExit={onExit}
+          onToggleSidebar={() =>
+            setSidebarOpen((prev) => !prev)
+          }
         />
 
 
@@ -75,6 +91,9 @@ export default function AdminLayout({
           </div>
 
         </div>
+
+
+        <AdminFooter />
 
       </main>
 

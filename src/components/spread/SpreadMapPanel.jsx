@@ -70,6 +70,7 @@ export default function SpreadMapPanel({
   onDistrictSelect,
   onTalukSelect,
   onDiseaseChange,
+  showAnalytics = true,
 }) {
   const [diseases, setDiseases] = useState([]);
   const [pickedDisease, setPickedDisease] = useState("");
@@ -513,18 +514,22 @@ export default function SpreadMapPanel({
         </aside>
       </div>
 
-      {/* ================= DATA VISUALIZATION ================= */}
-      <SpreadCharts
-        disease={disease}
-        district={district}
-        latest={latest}
-        forecast={forecast}
-        forecastDay={forecastDay}
-        mode={mode}
-      />
+      {showAnalytics && (
+        <>
+          {/* ================= DATA VISUALIZATION ================= */}
+          <SpreadCharts
+            disease={disease}
+            district={district}
+            latest={latest}
+            forecast={forecast}
+            forecastDay={forecastDay}
+            mode={mode}
+          />
 
-      {/* ================= ALL CASES TABLE ================= */}
-      <SpreadCasesTable key={reloadKey} />
+          {/* ================= ALL CASES TABLE ================= */}
+          <SpreadCasesTable key={reloadKey} />
+        </>
+      )}
     </div>
   );
 }

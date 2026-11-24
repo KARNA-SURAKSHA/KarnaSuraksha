@@ -1072,25 +1072,25 @@ export default function SupervisorManagement({
   // ==========================================================
 
   return (
-    <section className="relative w-full text-[#10243A]">
+    <section className="relative w-full max-w-[1254px] mx-auto px-[14px] md:px-0 py-[12px] md:py-0 text-[#10243A]">
 
       {/* =====================================================
           HERO
       ====================================================== */}
 
-      <div className="relative overflow-hidden rounded-[12px] border border-[#E4E9E6] bg-white min-h-[150px]">
+      <div className="relative overflow-hidden rounded-[12px] border border-[#E4E9E6] bg-white min-h-[135px] sm:min-h-[145px] md:min-h-[150px]">
 
         <div className="absolute inset-0 bg-gradient-to-r from-white via-white/95 to-[#EEF8F1]" />
 
-        <div className="relative z-10 px-[22px] py-[21px]">
+        <div className="relative z-10 px-[16px] py-[16px] sm:px-[22px] sm:py-[21px]">
 
-          <div className="max-w-[540px]">
+          <div className="max-w-[58%] sm:max-w-[70%] md:max-w-[540px]">
 
-            <h1 className="text-[26px] leading-[1.15] font-semibold tracking-[-0.035em] text-[#0B1730]">
+            <h1 className="text-[20px] sm:text-[23px] md:text-[26px] leading-[1.15] font-semibold tracking-[-0.035em] text-[#0B1730]">
               Medical Supervisor Management
             </h1>
 
-            <p className="mt-[8px] text-[12px] leading-[1.65] text-[#52606D]">
+            <p className="mt-[6px] md:mt-[8px] text-[10px] sm:text-[11px] md:text-[12px] leading-[1.45] md:leading-[1.65] text-[#52606D]">
               Medical supervisors are responsible for all taluks within their assigned district and oversee reporting, agents, and data quality.
             </p>
 
@@ -1101,10 +1101,10 @@ export default function SupervisorManagement({
         <img
           src={supervisorHero}
           alt="Medical supervisor"
-          className="absolute right-[175px] bottom-0 h-[145px] w-auto object-contain pointer-events-none select-none"
+          className="admin-supervisor-hero-img absolute right-0 md:right-[175px] bottom-0 h-[115px] sm:h-[135px] md:h-[145px] w-auto object-contain pointer-events-none select-none"
         />
 
-        <div className="absolute right-[18px] top-[18px] w-[205px] rounded-[12px] border border-[#DCE9E0] bg-white/95 px-[15px] py-[14px] shadow-[0_4px_16px_rgba(31,49,68,.05)]">
+        <div className="hidden md:block absolute right-[18px] top-[18px] w-[205px] rounded-[12px] border border-[#DCE9E0] bg-white/95 px-[15px] py-[14px] shadow-[0_4px_16px_rgba(31,49,68,.05)]">
 
           <div className="flex items-start gap-[10px]">
 
@@ -1176,7 +1176,7 @@ export default function SupervisorManagement({
           STAT CARDS
       ====================================================== */}
 
-      <div className="mt-[10px] grid grid-cols-4 gap-[10px]">
+      <div className="mt-[10px] grid grid-cols-2 md:grid-cols-4 gap-[10px]">
 
         <StatCard
           icon={UsersRound}
@@ -1214,7 +1214,7 @@ export default function SupervisorManagement({
           MAIN DIRECTORY + DETAILS
       ====================================================== */}
 
-      <div className="mt-[10px] grid grid-cols-[minmax(0,1fr)_335px] gap-[10px]">
+      <div className="mt-[10px] grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_335px] gap-[10px]">
 
         {/* ===================================================
             DIRECTORY
@@ -1254,7 +1254,7 @@ export default function SupervisorManagement({
                 <button
                   type="button"
                   onClick={exportCsv}
-                  className="inline-flex h-[31px] items-center gap-[6px] rounded-[6px] border border-[#D8E1DC] bg-white px-[11px] text-[10px] font-medium text-[#34495A] hover:bg-[#F7FAF8]"
+                  className="hidden sm:inline-flex h-[31px] items-center gap-[6px] rounded-[6px] border border-[#D8E1DC] bg-white px-[11px] text-[10px] font-medium text-[#34495A] hover:bg-[#F7FAF8]"
                 >
                   <Download size={13} />
                   Export
@@ -1290,7 +1290,7 @@ export default function SupervisorManagement({
               </div>
 
 
-              <div className="relative w-[138px]">
+              <div className="hidden sm:block relative w-[138px]">
 
                 <select
                   value={districtFilter}
@@ -1326,7 +1326,7 @@ export default function SupervisorManagement({
               </div>
 
 
-              <div className="relative w-[112px]">
+              <div className="hidden sm:block relative w-[112px]">
 
                 <select
                   value={statusFilter}
@@ -1769,24 +1769,36 @@ export default function SupervisorManagement({
                 SUPERVISOR DETAILS
               </h2>
 
-              <p className="mt-[3px] text-[8px] text-[#7B8794]">
+              <p className="mt-[3px] text-[8px] text-[#7B8794] hidden sm:block">
                 Current profile and district oversight.
               </p>
 
             </div>
 
             {selected && (
-              <button
-                type="button"
-                onClick={() =>
-                  openEdit(
-                    selected
-                  )
-                }
-                className="text-[9px] font-semibold text-[#087A32] hover:underline"
-              >
-                View Full Profile →
-              </button>
+              <div className="flex items-center gap-[8px]">
+                <span
+                  className={`rounded-[5px] border px-[7px] py-[3px] text-[8px] font-semibold ${statusClasses(
+                    selected.is_active
+                  )}`}
+                >
+                  {selected.is_active
+                    ? "Active"
+                    : "Inactive"}
+                </span>
+
+                <button
+                  type="button"
+                  onClick={() =>
+                    openEdit(
+                      selected
+                    )
+                  }
+                  className="hidden sm:inline-block text-[9px] font-semibold text-[#087A32] hover:underline"
+                >
+                  View Full Profile →
+                </button>
+              </div>
             )}
 
           </div>
@@ -1840,7 +1852,7 @@ export default function SupervisorManagement({
                 </div>
 
                 <span
-                  className={`rounded-[5px] border px-[7px] py-[4px] text-[8px] font-semibold ${statusClasses(
+                  className={`hidden sm:inline-flex rounded-[5px] border px-[7px] py-[4px] text-[8px] font-semibold ${statusClasses(
                     selected.is_active
                   )}`}
                 >
@@ -2209,30 +2221,30 @@ function StatCard({
   amber = false,
 }) {
   return (
-    <div className="rounded-[10px] border border-[#E5EAE7] bg-white px-[14px] py-[13px] shadow-[0_2px_6px_rgba(31,49,68,.025)]">
+    <div className="rounded-[10px] border border-[#E5EAE7] bg-white p-[11px] sm:px-[14px] sm:py-[13px] shadow-[0_2px_6px_rgba(31,49,68,.025)]">
 
-      <div className="flex items-center gap-[10px]">
+      <div className="flex items-center gap-[9px] sm:gap-[10px]">
 
         <div
-          className={`flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-full ${
+          className={`flex h-[36px] w-[36px] sm:h-[42px] sm:w-[42px] shrink-0 items-center justify-center rounded-full ${
             amber
               ? "bg-[#FFF5E8] text-[#E98708]"
               : "bg-[#EAF7EE] text-[#087A32]"
           }`}
         >
           <Icon
-            size={21}
+            size={19}
             strokeWidth={1.8}
           />
         </div>
 
-        <div>
+        <div className="min-w-0">
 
-          <p className="text-[8px] font-semibold text-[#52606D]">
+          <p className="text-[8px] font-semibold text-[#52606D] truncate">
             {label}
           </p>
 
-          <p className="mt-[3px] text-[20px] leading-none font-semibold text-[#172B43]">
+          <p className="mt-[2px] sm:mt-[3px] text-[18px] sm:text-[20px] leading-none font-semibold text-[#172B43]">
             {value}
           </p>
 
@@ -2240,7 +2252,7 @@ function StatCard({
 
       </div>
 
-      <p className="mt-[9px] text-[8px] text-[#7B8794]">
+      <p className="mt-[7px] sm:mt-[9px] text-[8px] text-[#7B8794] truncate">
         {note}
       </p>
 

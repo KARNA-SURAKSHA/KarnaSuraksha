@@ -9,13 +9,17 @@ import {
   Activity,
   AlertCircle,
   ArrowRight,
+  BarChart3,
   ClipboardList,
   FileCheck2,
   FileText,
+  MapPin,
   Plus,
   ShieldCheck,
   UserCog,
   UserRound,
+  X,
+  Zap,
 } from "lucide-react";
 
 import { api } from "../../api";
@@ -49,11 +53,11 @@ const REFERENCE_DATA = {
 
 
 const REPORTING_VALUES = [
-  68,
-  112,
-  154,
-  176,
-  198,
+  55,
+  100,
+  140,
+  158,
+  172,
 ];
 
 
@@ -299,6 +303,20 @@ export default function AdminDashboard({
         return [
 
           {
+            time: "12:38 PM",
+            title:
+              "Supervisor notification updated",
+            place: "Kodagu",
+          },
+
+          {
+            time: "06:25 PM",
+            title:
+              "Medical alert dispatched",
+            place: "Kodagu",
+          },
+
+          {
             time: "09:42 AM",
             title:
               "Agent account created",
@@ -317,20 +335,6 @@ export default function AdminDashboard({
             title:
               "Supervisor assignment updated",
             place: "Madikeri",
-          },
-
-          {
-            time: "08:54 AM",
-            title:
-              "Weekly report submitted",
-            place: "Somwarpet",
-          },
-
-          {
-            time: "08:30 AM",
-            title:
-              "Supervisor account activated",
-            place: "Kodagu",
           },
 
         ];
@@ -523,6 +527,7 @@ export default function AdminDashboard({
 
           <PanelTitle
             title="REPORT OVERVIEW"
+            icon={BarChart3}
           />
 
 
@@ -563,7 +568,7 @@ export default function AdminDashboard({
 
 
               <OverviewMetric
-                icon={Activity}
+                icon={X}
                 label="Rejected Reports"
                 value="3"
                 tone="red"
@@ -622,6 +627,8 @@ export default function AdminDashboard({
 
           <PanelTitle
             title="PENDING ACTIONS"
+            icon={ClipboardList}
+            color="#f97316"
           />
 
 
@@ -744,25 +751,25 @@ export default function AdminDashboard({
               <RiskLegend
                 color="#168B47"
                 title="Low Risk"
-                value="8 Taluks (32%)"
+                value="8 Taluks (12.5%)"
               />
 
               <RiskLegend
                 color="#F4B400"
                 title="Moderate Risk"
-                value="10 Taluks (40%)"
+                value="10 Taluks (18.6%)"
               />
 
               <RiskLegend
                 color="#F66A16"
                 title="High Risk"
-                value="5 Taluks (20%)"
+                value="5 Taluks (9.7%)"
               />
 
               <RiskLegend
                 color="#D9232E"
                 title="Very High Risk"
-                value="2 Taluks (8%)"
+                value="2 Taluks (3.1%)"
               />
 
             </div>
@@ -788,6 +795,7 @@ export default function AdminDashboard({
 
           <PanelTitle
             title="QUICK ACTIONS"
+            icon={Zap}
           />
 
 
@@ -849,6 +857,7 @@ export default function AdminDashboard({
 function PanelTitle({
   title,
   icon: Icon,
+  color,
 }) {
 
   return (
@@ -859,6 +868,7 @@ function PanelTitle({
         <Icon
           size={18}
           strokeWidth={1.8}
+          style={color ? { color } : undefined}
         />
       )}
 
@@ -995,7 +1005,7 @@ function ReportingChart() {
 
   const bottom = 27;
 
-  const max = 240;
+  const max = 200;
 
 
   const usableWidth =
@@ -1062,7 +1072,7 @@ function ReportingChart() {
     >
 
 
-      {[0, 60, 120, 180, 240].map(
+      {[0, 50, 100, 150, 200].map(
         (value) => {
 
           const y =
@@ -1244,6 +1254,19 @@ function PendingAction({
 }
 
 
+function formatPulseTitle(title) {
+  if (!title) return "";
+  const spaced = title.replace(/[-_]+/g, " ").trim();
+  if (/^[A-Z0-9\s]+$/.test(spaced)) {
+    return spaced
+      .toLowerCase()
+      .split(" ")
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+  }
+  return spaced;
+}
+
 /* ============================================================
    SURVEILLANCE PULSE ITEM
 ============================================================ */
@@ -1253,6 +1276,8 @@ function PulseItem({
   title,
   place,
 }) {
+
+  const displayTitle = formatPulseTitle(title);
 
   return (
 
@@ -1275,8 +1300,8 @@ function PulseItem({
 
       <div className="admin-pulse-description">
 
-        <strong>
-          {title}
+        <strong title={title}>
+          {displayTitle}
         </strong>
 
         <span>

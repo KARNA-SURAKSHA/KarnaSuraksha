@@ -39,11 +39,8 @@ import NotificationsTab
 import SpreadMapLazy
   from "../../components/spread/SpreadMapLazy";
 
-import AnalyticsSection
-  from "./dashboard/AnalyticsSection";
-
-import DiseaseDistribution
-  from "./dashboard/DiseaseDistribution";
+import SpreadAnalyticsLazy
+  from "../../components/spread/SpreadAnalyticsLazy";
 
 import PrecautionarySection
   from "./dashboard/PrecautionarySection";
@@ -765,6 +762,7 @@ export default function UserPortal({
                       highlightTaluk={
                         selectedLocation?.talukName || ""
                       }
+                      showAnalytics={false}
                     />
 
                   </div>
@@ -783,114 +781,38 @@ export default function UserPortal({
 
                 <PageContainer>
 
-                  {loading ? (
+                  <div className="space-y-6">
 
-                    <div
-                      className="
-                  rounded-3xl
-                  border
-                  border-[#E7E2D8]
-                  bg-white
-                  p-12
-                  text-center
-                "
-                    >
+                    <div>
 
-                      <div
+                      <h1
                         className="
-                    mx-auto
-                    h-10
-                    w-10
-                    animate-spin
-                    rounded-full
-                    border-4
-                    border-[#E8E2D8]
-                    border-t-[#0B7A33]
-                  "
-                      />
-
-                      <p
-                        className="
-                    mt-4
-                    text-gray-500
-                  "
-                      >
-                        Loading analytics...
-                      </p>
-
-                    </div>
-
-                  ) : error ? (
-
-                    <div
-                      className="
-                  rounded-2xl
-                  border
-                  border-red-200
-                  bg-red-50
-                  px-6
-                  py-4
-                  text-red-700
-                "
-                    >
-                      {error}
-                    </div>
-
-                  ) : dashboardData ? (
-
-                    <div
-                      className="
-                  space-y-6
-                "
-                    >
-
-                      <div>
-
-                        <h1
-                          className="
                       text-[30px]
                       font-bold
                       text-[#13264B]
                     "
-                        >
-                          Analytics
-                        </h1>
+                      >
+                        Analytics
+                      </h1>
 
 
-                        <p
-                          className="
+                      <p
+                        className="
                       mt-1
                       text-[14px]
                       text-[#7A8598]
                     "
-                        >
-                          Disease surveillance statistics
-                          and trends for your selected location.
-                        </p>
-
-                      </div>
-
-
-                      <AnalyticsSection
-                        dashboardData={
-                          dashboardData
-                        }
-                      />
-
-
-                      <DiseaseDistribution
-                        dashboardData={
-                          dashboardData
-                        }
-                      />
+                      >
+                        Disease surveillance statistics
+                        and trends across Karnataka.
+                      </p>
 
                     </div>
 
-                  ) : (
 
-                    <NoLocation />
+                    <SpreadAnalyticsLazy />
 
-                  )}
+                  </div>
 
                 </PageContainer>
 

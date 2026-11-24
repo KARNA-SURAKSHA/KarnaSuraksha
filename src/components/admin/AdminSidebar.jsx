@@ -20,6 +20,7 @@ import {
   useState,
 } from "react";
 
+import emblem from "../../assets/landing/emblem.png";
 import "./AdminSidebar.css";
 
 
@@ -140,13 +141,31 @@ export default function AdminSidebar({
   activeKey,
   onNavigate,
   onExit,
+  open: propOpen,
+  onClose: propOnClose,
 }) {
 
   const [
-    open,
-    setOpen,
+    internalOpen,
+    setInternalOpen,
   ] =
     useState(false);
+
+  const isControlled =
+    propOpen !== undefined;
+
+  const open =
+    isControlled
+      ? propOpen
+      : internalOpen;
+
+  const handleClose = () => {
+    if (isControlled) {
+      propOnClose?.();
+    } else {
+      setInternalOpen(false);
+    }
+  };
 
 
   /* ==========================================================
@@ -165,7 +184,7 @@ export default function AdminSidebar({
 
       }
 
-      setOpen(false);
+      handleClose();
 
     };
 
@@ -175,24 +194,26 @@ export default function AdminSidebar({
     <>
 
       {/* ======================================================
-          MOBILE MENU BUTTON
+          MOBILE MENU BUTTON (only when not controlled by layout)
       ====================================================== */}
 
-      <button
-        type="button"
-        onClick={() =>
-          setOpen(true)
-        }
-        aria-label="Open admin navigation"
-        className="admin-sidebar-v2-mobile-menu"
-      >
+      {!isControlled && (
+        <button
+          type="button"
+          onClick={() =>
+            setInternalOpen(true)
+          }
+          aria-label="Open admin navigation"
+          className="admin-sidebar-v2-mobile-menu"
+        >
 
-        <Menu
-          size={21}
-          strokeWidth={1.8}
-        />
+          <Menu
+            size={21}
+            strokeWidth={1.8}
+          />
 
-      </button>
+        </button>
+      )}
 
 
       {/* ======================================================
@@ -204,9 +225,7 @@ export default function AdminSidebar({
         <button
           type="button"
           aria-label="Close admin navigation"
-          onClick={() =>
-            setOpen(false)
-          }
+          onClick={handleClose}
           className="admin-sidebar-v2-overlay"
         />
 
@@ -234,36 +253,28 @@ export default function AdminSidebar({
         <div className="admin-sidebar-v2-brand">
 
           <div className="admin-sidebar-v2-brand-mark">
-
-            <ShieldPlus
-              size={34}
-              strokeWidth={2.05}
+            <img
+              src={emblem}
+              alt="Karna Suraksha"
+              className="admin-sidebar-v2-emblem"
             />
-
           </div>
-
 
           <div className="admin-sidebar-v2-brand-text">
-
             <strong>
-              HYPERLOCAL
+              Karna Suraksha
             </strong>
-
             <span>
-              DISEASE SURVEILLANCE
+              Disease Surveillance Platform
             </span>
-
           </div>
-
 
           {/* MOBILE CLOSE */}
 
           <button
             type="button"
             className="admin-sidebar-v2-close"
-            onClick={() =>
-              setOpen(false)
-            }
+            onClick={handleClose}
             aria-label="Close admin navigation"
           >
 
