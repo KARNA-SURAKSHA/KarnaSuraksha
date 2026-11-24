@@ -952,7 +952,7 @@ button {
 
   color: #14243b;
 
-  cursor: pointer;
+  cursor: default;
 }
 
 
@@ -2606,7 +2606,7 @@ body:has(.admin-shell) {
 
   color: #17263c;
 
-  cursor: pointer;
+  cursor: default;
 }
 
 
@@ -2759,7 +2759,7 @@ body:has(.admin-shell) {
 
   color: #17263c;
 
-  cursor: pointer;
+  cursor: default;
 }
 
 
@@ -4115,7 +4115,7 @@ Therefore the duplicate location problem is eliminated.
 
   .admin-main {
     margin-left: 0 !important;
-    padding-top: 56px !important;
+    padding-top: 64px !important;
     background: #f6f8f7 !important;
     min-height: 100vh !important;
     width: 100% !important;
@@ -4163,8 +4163,8 @@ Therefore the duplicate location problem is eliminated.
     right: 0 !important;
     width: 100% !important;
     max-width: 100vw !important;
-    height: 56px !important;
-    min-height: 56px !important;
+    height: 64px !important;
+    min-height: 64px !important;
     padding: 0 10px !important;
     background: #ffffff !important;
     border-bottom: 1px solid #e7ebe9 !important;
@@ -4178,19 +4178,21 @@ Therefore the duplicate location problem is eliminated.
 
   /* Hamburger menu button */
   .admin-header-menu {
-    width: 32px !important;
-    height: 32px !important;
-    min-width: 32px !important;
+    order: 3 !important;
+    width: 36px !important;
+    height: 36px !important;
+    min-width: 36px !important;
     display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    border: 0 !important;
-    background: transparent !important;
+    border: 1px solid #dce4de !important;
+    background: #ffffff !important;
     color: #1e293b !important;
     cursor: pointer !important;
-    border-radius: 6px !important;
+    border-radius: 10px !important;
     padding: 0 !important;
     flex-shrink: 0 !important;
+    margin-left: 6px !important;
   }
 
   .admin-header-menu:hover {
@@ -4199,17 +4201,18 @@ Therefore the duplicate location problem is eliminated.
 
   /* Mobile Brand Logo & Text (Matches Agent Portal) */
   .admin-header-logo-area {
+    order: 1 !important;
     display: flex !important;
     align-items: center !important;
-    gap: 6px !important;
-    margin-left: 4px !important;
+    gap: 8px !important;
+    margin-left: 0 !important;
     min-width: 0 !important;
     flex-shrink: 1 !important;
   }
 
   .admin-header-logo-img {
-    width: 26px !important;
-    height: 26px !important;
+    width: 36px !important;
+    height: 36px !important;
     object-fit: contain !important;
     flex-shrink: 0 !important;
   }
@@ -4224,7 +4227,7 @@ Therefore the duplicate location problem is eliminated.
   }
 
   .admin-header-logo-text strong {
-    font-size: 12px !important;
+    font-size: 14.5px !important;
     font-weight: 800 !important;
     color: #087a32 !important;
     letter-spacing: -0.2px !important;
@@ -4234,7 +4237,7 @@ Therefore the duplicate location problem is eliminated.
   }
 
   .admin-header-logo-text span {
-    font-size: 7.5px !important;
+    font-size: 9.5px !important;
     font-weight: 600 !important;
     color: #475569 !important;
     letter-spacing: 0.01em !important;
@@ -4251,6 +4254,7 @@ Therefore the duplicate location problem is eliminated.
 
   /* Right cluster: bell notification + profile */
   .admin-header-right {
+    order: 2 !important;
     display: flex !important;
     align-items: center !important;
     gap: 6px !important;
@@ -4260,18 +4264,7 @@ Therefore the duplicate location problem is eliminated.
 
   /* Notification Bell */
   .admin-header-notification {
-    position: relative !important;
-    width: 28px !important;
-    height: 28px !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    border: 0 !important;
-    background: transparent !important;
-    color: #1e293b !important;
-    padding: 0 !important;
-    cursor: pointer !important;
-    flex-shrink: 0 !important;
+    display: none !important;
   }
 
   .admin-header-notification svg {
@@ -4311,17 +4304,17 @@ Therefore the duplicate location problem is eliminated.
     border: 0 !important;
     background: transparent !important;
     padding: 0 !important;
-    cursor: pointer !important;
+    cursor: default !important;
   }
 
   .admin-profile-avatar {
-    width: 26px !important;
-    height: 26px !important;
-    min-width: 26px !important;
+    width: 34px !important;
+    height: 34px !important;
+    min-width: 34px !important;
     border-radius: 50% !important;
     background: #087a32 !important;
     color: #ffffff !important;
-    font-size: 10px !important;
+    font-size: 11px !important;
     font-weight: 700 !important;
     display: flex !important;
     align-items: center !important;
@@ -4337,14 +4330,14 @@ Therefore the duplicate location problem is eliminated.
   }
 
   .admin-profile-details strong {
-    font-size: 10.5px !important;
+    font-size: 12px !important;
     font-weight: 700 !important;
     color: #10243a !important;
     white-space: nowrap !important;
   }
 
   .admin-profile-details span {
-    font-size: 7.5px !important;
+    font-size: 10px !important;
     font-weight: 500 !important;
     color: #64748b !important;
     white-space: nowrap !important;
