@@ -220,6 +220,7 @@ export default function RiskMap({
           highlightTaluk={location.taluk?.name || ""}
           disease={disease}
           onDiseaseChange={setDisease}
+          showAnalytics={false}
           onTalukSelect={(name) => {
             const hit = entries.find((e) => e.taluk_name === name);
             if (hit) setMapPick(hit.taluk_id);

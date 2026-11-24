@@ -32,6 +32,9 @@ import DiseaseReports
 import RiskMap
   from "./RiskMap";
 
+import SpreadAnalyticsLazy
+  from "../../components/spread/SpreadAnalyticsLazy";
+
 import NotificationsPanel
   from "./NotificationsPanel";
 
@@ -251,10 +254,22 @@ export default function AdminPortal({
         case "analytics":
 
           return (
-            <ComingSoon
-              title="Analytics"
-              description="View system-wide administrative analytics."
-            />
+            <div>
+              <div className="mb-5">
+                <p className="text-[11px] uppercase tracking-[0.14em] font-semibold text-[#9A9489]">
+                  System-wide surveillance
+                </p>
+                <h2 className="mt-1 text-[20px] font-semibold text-[#1F3144]">
+                  Analytics
+                </h2>
+                <p className="mt-1 text-[13px] text-[#7A8598]">
+                  Data visualization and case records for the selected geographic scope.
+                </p>
+              </div>
+              <SpreadAnalyticsLazy
+                district={location.district?.name || ""}
+              />
+            </div>
           );
 
 
