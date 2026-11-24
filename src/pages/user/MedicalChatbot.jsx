@@ -17,6 +17,24 @@ import {
   Lightbulb,
   Syringe,
   Sparkles,
+  Droplets,
+  Shirt,
+  SprayCan,
+  Users,
+  House,
+  Blinds,
+  Bug,
+  Utensils,
+  Hand,
+  Thermometer,
+  Pill,
+  Siren,
+  Wind,
+  Dumbbell,
+  Apple,
+  Info,
+  CheckCheck,
+  User,
 } from "lucide-react";
 
 import ReactMarkdown from "react-markdown";
@@ -88,7 +106,7 @@ function MedicalMarkdown({ content }) {
           ),
           li: ({ children }) => <li className="pl-1">{children}</li>,
           strong: ({ children }) => (
-            <strong className="font-bold text-[#102A43]">{children}</strong>
+            <strong className="font-bold text-[#0B7A33]">{children}</strong>
           ),
           h1: ({ children }) => (
             <h1 className="mb-2 mt-1 text-[18px] font-bold text-[#102A43]">
@@ -109,6 +127,488 @@ function MedicalMarkdown({ content }) {
       >
         {content || ""}
       </ReactMarkdown>
+    </div>
+  );
+}
+
+/* ============================================================
+   STRUCTURED ANSWER RENDERING
+   Turns "- **Title**: text" bullet lists into icon cards, and a
+   trailing short line / blockquote into a green tip row.
+   ============================================================ */
+
+const ITEM_RE =
+  /^\s{0,3}(?:[-*•]|\d+[.)])\s+(?:\*\*|__)(.+?)(?:\*\*|__)\s*[:：\-–—]?\s*(.*)$/;
+
+const BULLET_RE = /^\s*(?:[-*•]|\d+[.)])\s+/;
+
+const TIP_EMOJI_RE = /^\s*(?:[✅💡ℹ️⚠️✨👉🌿]|>)+\s*/u;
+
+function parsePrimary(content) {
+  const lines = String(content || "").replace(/\r\n/g, "\n").split("\n");
+  const segs = [];
+  let buf = [];
+  let items = null;
+  let raw = [];
+
+  const flushMd = () => {
+    const text = buf.join("\n").trim();
+    if (text) segs.push({ type: "md", text });
+    buf = [];
+  };
+
+  const flushItems = () => {
+    if (!items) return;
+    if (items.length >= 2) {
+      flushMd();
+      segs.push({ type: "cards", items });
+    } else {
+      buf.push(...raw);
+    }
+    items = null;
+    raw = [];
+  };
+
+  const nextNonBlank = (from) => {
+    for (let j = from; j < lines.length; j += 1) {
+      if (lines[j].trim()) return lines[j];
+    }
+    return "";
+  };
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const line = lines[i];
+    const m = ITEM_RE.exec(line);
+
+    if (m) {
+      if (!items) {
+        flushMd();
+        items = [];
+        raw = [];
+      }
+      items.push({
+        title: m[1].trim().replace(/[:：]\s*$/, ""),
+        body: m[2].trim(),
+      });
+      raw.push(line);
+      continue;
+    }
+
+    if (items) {
+      if (!line.trim()) {
+        if (ITEM_RE.test(nextNonBlank(i + 1))) {
+          raw.push(line);
+          continue;
+        }
+        flushItems();
+        buf.push(line);
+        continue;
+      }
+
+      if (/^\s{2,}\S/.test(line)) {
+        const extra = line.replace(BULLET_RE, "").trim();
+        const last = items[items.length - 1];
+        last.body = `${last.body} ${extra}`.trim();
+        raw.push(line);
+        continue;
+      }
+
+      flushItems();
+    }
+
+    buf.push(line);
+  }
+
+  flushItems();
+  flushMd();
+
+  // trailing short line / blockquote -> tip row
+  const last = segs[segs.length - 1];
+  if (last && last.type === "md") {
+    const paragraphs = last.text.split(/\n\s*\n/);
+    const tail = paragraphs[paragraphs.length - 1].trim();
+    const isQuote = /^>/.test(tail);
+    const afterCards = segs.length > 1 && segs[segs.length - 2].type === "cards";
+    const looksLikeTip =
+      TIP_EMOJI_RE.test(tail) || (afterCards && !tail.includes("\n") && tail.length <= 240);
+
+    if (tail && (isQuote || looksLikeTip) && tail.length <= 400) {
+      const rest = paragraphs.slice(0, -1).join("\n\n").trim();
+      segs.pop();
+      if (rest) segs.push({ type: "md", text: rest });
+      segs.push({
+        type: "tip",
+        text: tail
+          .split("\n")
+          .map((l) => l.replace(TIP_EMOJI_RE, ""))
+          .join(" ")
+          .replace(/\*\*/g, "")
+          .trim(),
+      });
+    }
+  }
+
+  return segs;
+}
+
+/* ------------------------------------------------------------
+   FALLBACK: make ANY answer look like the card layout.
+   Handles plain bullets, headings, paragraphs and long prose.
+   ------------------------------------------------------------ */
+
+const HEADING_RE = /^\s{0,3}#{1,6}\s+(.+?)\s*#*\s*$/;
+const BOLD_LINE_RE = /^\s{0,3}(?:\*\*|__)(.+?)(?:\*\*|__)\s*:?\s*$/;
+const PLAIN_BULLET_RE = /^\s{0,3}(?:[-*•]|\d+[.)])\s+(.*)$/;
+const CARE_TIP_RE =
+  /doctor|healthcare|health care|medical (?:care|attention|professional|advice)|consult|seek|not a (?:substitute|diagnosis)/i;
+
+const DEFAULT_TIP =
+  "This is general health information, not a diagnosis. Please consult a healthcare professional for personal advice.";
+
+const cleanTitle = (t) =>
+  String(t || "")
+    .replace(/\*\*|__/g, "")
+    .replace(/[:：]\s*$/, "")
+    .trim();
+
+function splitTitleBody(text) {
+  const m = /^(?:\*\*|__)(.+?)(?:\*\*|__)\s*[:：\-–—]?\s*(.*)$/.exec(text);
+  if (m) return { title: cleanTitle(m[1]), body: m[2].trim() };
+
+  const c = /^([^:.!?]{3,50}):\s+(.+)$/.exec(text);
+  if (c && c[1].trim().split(/\s+/).length <= 6) {
+    return { title: cleanTitle(c[1]), body: c[2].trim() };
+  }
+  return { title: "", body: text.trim() };
+}
+
+function structurize(content) {
+  const text = String(content || "").replace(/\r\n/g, "\n").trim();
+  if (!text || /unable to connect/i.test(text)) return null;
+  if (text.split("\n").some((l) => /^\s*\|/.test(l))) return null; // tables stay as markdown
+
+  const lines = text.split("\n");
+  const intro = [];
+  const cards = [];
+  let tipText = "";
+  let section = null; // {title, body: []}
+  let para = [];
+
+  const pushCard = (card) => {
+    if (card.title || card.body) cards.push(card);
+  };
+
+  const flushSection = () => {
+    if (!section) return;
+    pushCard({
+      title: section.title,
+      body: section.body.join("\n").trim(),
+    });
+    section = null;
+  };
+
+  const flushPara = () => {
+    if (!para.length) return;
+    const t = para.join(" ").trim();
+    para = [];
+    if (!t) return;
+    if (section) section.body.push(t);
+    else if (!cards.length) intro.push(t);
+    else pushCard({ title: "", body: t });
+  };
+
+  for (const raw of lines) {
+    const line = raw.replace(/\s+$/, "");
+
+    if (!line.trim()) {
+      flushPara();
+      continue;
+    }
+
+    if (/^\s*>/.test(line)) {
+      flushPara();
+      tipText = line.replace(/^\s*>+\s*/, "").replace(/\*\*/g, "").trim();
+      continue;
+    }
+
+    const h = HEADING_RE.exec(line) || BOLD_LINE_RE.exec(line);
+    if (h) {
+      flushPara();
+      flushSection();
+      section = { title: cleanTitle(h[1]), body: [] };
+      continue;
+    }
+
+    const b = PLAIN_BULLET_RE.exec(line);
+    const isIndented = /^\s{4,}\S/.test(line);
+
+    if (b && !isIndented) {
+      flushPara();
+      if (section) {
+        section.body.push(`- ${b[1].trim()}`);
+      } else {
+        const { title, body } = splitTitleBody(b[1].trim());
+        pushCard({ title, body });
+      }
+      continue;
+    }
+
+    if (isIndented) {
+      const extra = line.replace(PLAIN_BULLET_RE, "$1").trim();
+      if (section) {
+        section.body.push(`- ${extra}`);
+      } else if (cards.length) {
+        const last = cards[cards.length - 1];
+        last.body = `${last.body} ${extra}`.trim();
+      } else {
+        para.push(extra);
+      }
+      continue;
+    }
+
+    para.push(line.trim());
+  }
+
+  flushPara();
+  flushSection();
+
+  // Pure prose with no list/heading: first sentence = intro, rest = cards.
+  if (!cards.length && intro.length) {
+    const sentences = intro
+      .join(" ")
+      .split(/(?<=[.!?])\s+(?=[A-Z0-9*])/)
+      .map((x) => x.trim())
+      .filter(Boolean);
+
+    if (sentences.length >= 3) {
+      intro.length = 0;
+      intro.push(sentences[0]);
+      const rest = sentences.slice(1);
+      const limited = rest.length > 6 ? [...rest.slice(0, 5), rest.slice(5).join(" ")] : rest;
+      limited.forEach((sentence) => pushCard({ title: "", body: sentence }));
+    }
+  }
+
+  if (cards.length < 2) return null;
+
+  // last short "see a doctor"-type card becomes the tip line
+  if (!tipText) {
+    const last = cards[cards.length - 1];
+    if (!last.title && last.body.length <= 240 && CARE_TIP_RE.test(last.body)) {
+      tipText = last.body.replace(/\*\*/g, "");
+      cards.pop();
+    }
+  }
+
+  const segs = [];
+  if (intro.length) segs.push({ type: "md", text: intro.join("\n\n") });
+  segs.push({ type: "cards", items: cards });
+  segs.push({ type: "tip", text: tipText || DEFAULT_TIP });
+  return segs;
+}
+
+function parseAssistant(content) {
+  const primary = parsePrimary(content);
+  const hasCards = primary.some((seg) => seg.type === "cards");
+
+  if (hasCards) {
+    if (!primary.some((seg) => seg.type === "tip")) {
+      primary.push({ type: "tip", text: DEFAULT_TIP });
+    }
+    return primary;
+  }
+
+  return structurize(content) || primary;
+}
+
+const ICON_RULES = [
+  [/water|stagnant|puddle|drain|gutter|container/i, Droplets],
+  [/clean|trash|garbage|waste|dispos|surrounding|litter|sanitation/i, Trash2],
+  [/clothing|clothes|sleeve|dress|wear/i, Shirt],
+  [/repellent|spray|deet|insecticide/i, SprayCan],
+  [/communit|neighbo|clean-up|campaign|awareness|family|together/i, Users],
+  [/housing|house|home|indoor|room|door|ventilat|coil|vaporizer/i, House],
+  [/barrier|screen|net\b|window|mosquito net/i, Blinds],
+  [/mosquito|insect|bite|vector|tick|fly|flies|pest/i, Bug],
+  [/food|eat|diet|nutrition|meal|drink|fluid|hydrat/i, Utensils],
+  [/hand|wash|hygiene|soap|sanitiz/i, Hand],
+  [/fever|temperature|heat/i, Thermometer],
+  [/medicine|medication|drug|tablet|antibiotic/i, Pill],
+  [/emergency|urgent|severe|immediate|hospital/i, Siren],
+  [/vaccin|immuni|shot/i, Syringe],
+  [/mask|cough|sneez|breath|air\b|respirat/i, Wind],
+  [/exercise|active|physical activity|workout|walk/i, Dumbbell],
+  [/fruit|vegetable|apple/i, Apple],
+  [/doctor|clinic|professional|healthcare|medical care|consult|see a/i, Stethoscope],
+];
+
+function pickIcon(title, body) {
+  const t = `${title}`;
+  for (const [re, Icon] of ICON_RULES) {
+    if (re.test(t)) return Icon;
+  }
+  const b = `${body}`;
+  for (const [re, Icon] of ICON_RULES) {
+    if (re.test(b)) return Icon;
+  }
+  return ShieldCheck;
+}
+
+function InlineMd({ children }) {
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        p: ({ children: c }) => <span className="block">{c}</span>,
+        ul: ({ children: c }) => (
+          <ul className="mt-1 list-disc space-y-0.5 pl-4">{c}</ul>
+        ),
+        ol: ({ children: c }) => (
+          <ol className="mt-1 list-decimal space-y-0.5 pl-4">{c}</ol>
+        ),
+        li: ({ children: c }) => <li>{c}</li>,
+        strong: ({ children: c }) => (
+          <strong className="font-semibold text-[#102A43]">{c}</strong>
+        ),
+      }}
+    >
+      {children || ""}
+    </ReactMarkdown>
+  );
+}
+
+function InfoCards({ items, compact }) {
+  return (
+    <div
+      className={`my-3 grid gap-3 ${compact ? "grid-cols-1" : "grid-cols-1 md:grid-cols-2"}`}
+    >
+      {items.map((item, index) => {
+        const Icon = pickIcon(item.title, item.body);
+        const spanFull = !compact && items.length % 2 === 1 && index === items.length - 1;
+
+        return (
+          <div
+            key={`${item.title}-${index}`}
+            className={`flex items-start gap-3.5 rounded-[14px] border border-[#DCEFE3] bg-[#EAF6EE] px-4 py-3.5 shadow-[0_1px_3px_rgba(11,122,51,0.08)] ${
+              spanFull ? "md:col-span-2" : ""
+            }`}
+          >
+            <span className="mt-0.5 flex h-[42px] w-[42px] shrink-0 items-center justify-center rounded-[12px] bg-white text-[#0B7A33] shadow-[0_1px_2px_rgba(16,42,67,0.08)]">
+              <Icon size={23} strokeWidth={1.8} />
+            </span>
+
+            <div className="min-w-0 self-center">
+              {item.title ? (
+                <h4 className="text-[13.5px] font-bold leading-snug text-[#102A43]">
+                  {item.title}
+                </h4>
+              ) : null}
+              {item.body ? (
+                <div
+                  className={
+                    item.title
+                      ? "mt-1 text-[12px] leading-[1.55] text-[#3F5163]"
+                      : "text-[13px] font-medium leading-[1.55] text-[#1F3547]"
+                  }
+                >
+                  <InlineMd>{item.body}</InlineMd>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function BotAvatar({ compact }) {
+  return (
+    <span
+      className={`flex shrink-0 items-center justify-center rounded-full border-2 border-[#BFE3CB] bg-white ${
+        compact ? "h-[30px] w-[30px]" : "h-[44px] w-[44px]"
+      }`}
+    >
+      <img
+        src={botAvatar}
+        alt=""
+        className={compact ? "h-[22px] w-[22px] object-contain" : "h-[34px] w-[34px] object-contain"}
+      />
+    </span>
+  );
+}
+
+function UserAvatar({ compact }) {
+  return (
+    <span
+      className={`flex shrink-0 items-center justify-center rounded-full bg-[#16A34A] text-white ${
+        compact ? "h-[30px] w-[30px]" : "h-[44px] w-[44px]"
+      }`}
+    >
+      <User size={compact ? 16 : 23} strokeWidth={2} />
+    </span>
+  );
+}
+
+function ChatMessage({ message, compact = false }) {
+  const isUser = message.role === "user";
+
+  if (isUser) {
+    return (
+      <div className="flex items-start justify-end gap-2.5">
+        <div
+          className={`rounded-[16px] rounded-tr-[5px] bg-[#D6F0DE] px-4 py-2.5 text-[#102A43] ${
+            compact ? "max-w-[82%]" : "max-w-[70%]"
+          }`}
+        >
+          <p
+            className={`whitespace-pre-wrap break-words leading-[1.55] ${
+              compact ? "text-[12.5px]" : "text-[14px] font-medium"
+            }`}
+          >
+            {message.content}
+          </p>
+          <div className="mt-1 flex items-center justify-end gap-1 text-[10px] text-[#4F6F5B]">
+            {message.time}
+            <CheckCheck size={12} strokeWidth={2} />
+          </div>
+        </div>
+        <UserAvatar compact={compact} />
+      </div>
+    );
+  }
+
+  const segments = parseAssistant(message.content);
+
+  return (
+    <div className="flex items-start gap-2.5">
+      <BotAvatar compact={compact} />
+
+      <div className="min-w-0 flex-1 rounded-[16px] rounded-tl-[5px] border border-[#E3EBE6] bg-white px-4 py-3.5 shadow-[0_1px_4px_rgba(16,42,67,0.06)]">
+        {segments.map((seg, index) => {
+          if (seg.type === "cards") {
+            return <InfoCards key={index} items={seg.items} compact={compact} />;
+          }
+
+          if (seg.type === "tip") {
+            return (
+              <div
+                key={index}
+                className="mt-1 flex items-center gap-2 text-[12.5px] font-medium text-[#0B7A33]"
+              >
+                <span className="flex h-[20px] w-[20px] shrink-0 items-center justify-center rounded-full bg-[#16A34A] text-white">
+                  <Info size={13} strokeWidth={2.4} />
+                </span>
+                <span>{seg.text}</span>
+              </div>
+            );
+          }
+
+          return <MedicalMarkdown key={index} content={seg.text} />;
+        })}
+
+        <div className="mt-2 text-[10px] text-[#8A98A8]">{message.time}</div>
+      </div>
     </div>
   );
 }
@@ -246,40 +746,13 @@ export default function MedicalChatbot({ username, selectedLocation }) {
             </div>
 
             <div className="flex-1 overflow-y-auto space-y-3 pb-3">
-              {messages.map((message, index) => {
-                const isUser = message.role === "user";
-                return (
-                  <div
-                    key={`${message.time}-${index}`}
-                    className={`flex ${
-                      isUser ? "justify-end" : "justify-start"
-                    }`}
-                  >
-                    <div
-                      className={`max-w-[85%] rounded-[14px] px-3.5 py-2.5 text-[12.5px] ${
-                        isUser
-                          ? "rounded-br-[4px] bg-[#087A32] text-white"
-                          : "rounded-bl-[4px] border border-[#E0E9E3] bg-[#F8FBF9] text-[#111820]"
-                      }`}
-                    >
-                      {isUser ? (
-                        <p className="whitespace-pre-wrap break-words leading-[1.5]">
-                          {message.content}
-                        </p>
-                      ) : (
-                        <MedicalMarkdown content={message.content} />
-                      )}
-                      <div
-                        className={`mt-1 text-[9px] ${
-                          isUser ? "text-white/70" : "text-[#8A98A8]"
-                        }`}
-                      >
-                        {message.time}
-                      </div>
-                    </div>
-                  </div>
-                );
-              })}
+              {messages.map((message, index) => (
+                <ChatMessage
+                  key={`${message.time}-${index}`}
+                  message={message}
+                  compact={true}
+                />
+              ))}
 
               {loading && (
                 <div className="flex justify-start">
@@ -685,42 +1158,13 @@ export default function MedicalChatbot({ username, selectedLocation }) {
               {/* CHAT MESSAGES */}
               <div className="min-h-[480px] max-h-[560px] overflow-y-auto px-[28px] py-[25px]">
                 <div className="mx-auto max-w-[850px] space-y-[18px]">
-                  {messages.map((message, index) => {
-                    const isUser = message.role === "user";
-
-                    return (
-                      <div
-                        key={`${message.time}-${index}`}
-                        className={`flex ${
-                          isUser ? "justify-end" : "justify-start"
-                        }`}
-                      >
-                        <div
-                          className={`max-w-[75%] ${
-                            isUser
-                              ? "rounded-[16px] rounded-br-[5px] bg-[#087A32] px-[17px] py-[12px] text-white"
-                              : "rounded-[16px] rounded-bl-[5px] border border-[#E0E9E3] bg-[#F8FBF9] px-[17px] py-[12px]"
-                          }`}
-                        >
-                          {isUser ? (
-                            <p className="whitespace-pre-wrap break-words text-[13px] leading-[1.65]">
-                              {message.content}
-                            </p>
-                          ) : (
-                            <MedicalMarkdown content={message.content} />
-                          )}
-
-                          <div
-                            className={`mt-[6px] text-[9px] ${
-                              isUser ? "text-white/70" : "text-[#8A98A8]"
-                            }`}
-                          >
-                            {message.time}
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
+                  {messages.map((message, index) => (
+                    <ChatMessage
+                      key={`${message.time}-${index}`}
+                      message={message}
+                      compact={false}
+                    />
+                  ))}
 
                   {loading && (
                     <div className="flex justify-start">
