@@ -29,10 +29,15 @@ import { useAuth } from "../context/AuthContext";
 
 import "./AdminLogin.css";
 import "./AgentLogin.css";
+import "./MedicalSupervisorLogin.css";
 
 import agentLoginImage from "../assets/ui/agent-login-left-reference.png";
 import adminLoginImage from "../assets/ui/admin-login-left-reference.png";
 import emblem from "../assets/landing/emblem.png";
+import supervisorPulse from "../assets/ui/medical-pulse-illustration.png";
+import supervisorSkyline from "../assets/ui/medical-dashboard-skyline.png";
+import supervisorCard from "../assets/ui/medical-supervisor-sidebar-card.png";
+import supervisorLoginReference from "../assets/ui/medical-supervisor-login-reference.png";
 
 
 // ============================================================
@@ -1106,6 +1111,11 @@ function StandardLogin({
     setPassword,
   ] = useState("");
 
+  const [
+    showPassword,
+    setShowPassword,
+  ] = useState(false);
+
 
   const [
     error,
@@ -1214,130 +1224,107 @@ function StandardLogin({
   // ==========================================================
 
   return (
+    <div className="supervisor-login-page">
+      <img
+        className="supervisor-login-project-logo"
+        src={emblem}
+        alt="Karna Suraksha logo"
+      />
 
-    <div className="min-h-screen bg-[#FCFAF6] flex items-center justify-center px-6">
-
-      <div className="w-full max-w-[440px]">
-
-
-        <button
-          onClick={onBack}
-          className="flex items-center gap-1.5 text-[14px] text-[#445064] hover:text-[#0B6D2E] mb-6 transition-colors"
-        >
-
-          <ArrowLeft size={16} />
-
-          Back to home
-
-        </button>
-
-
-        <div className="bg-white rounded-2xl border border-[#E8E2D8] shadow-sm p-8">
-
-
-          <div className="w-14 h-14 rounded-xl bg-[#0B7A33] flex items-center justify-center mb-5">
-
-            <Icon
-              size={28}
-              className="text-white"
-            />
-
+      <section className="supervisor-login-hero" aria-label="Medical supervisor portal">
+        <header className="supervisor-login-brand">
+          <img src={emblem} alt="" className="supervisor-login-emblem" />
+          <div>
+            <strong>Karna Suraksha</strong>
+            <span>Hyperlocal Disease Surveillance</span>
           </div>
+        </header>
 
+        <div className="supervisor-login-tagline">Healthy Karnataka. Healthier Tomorrow.</div>
 
-          <h2 className="text-[24px] font-semibold text-[#1F3144]">
-
-            {meta.label}
-
-          </h2>
-
-
-          <p className="text-[14px] text-[#445064] mt-1 mb-6">
-
-            {meta.hint}
-
-          </p>
-
-
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4"
-          >
-
-
-            <div>
-
-              <label className="block text-[13px] font-medium text-[#445064] mb-1">
-                Username
-              </label>
-
-              <input
-                type="text"
-                value={username}
-                onChange={(event) =>
-                  setUsername(
-                    event.target.value
-                  )
-                }
-                required
-                className="w-full rounded-lg border border-[#E8E2D8] px-4 py-2.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-[#0B7A33]/30"
-                placeholder="Enter your username"
-              />
-
-            </div>
-
-
-            <div>
-
-              <label className="block text-[13px] font-medium text-[#445064] mb-1">
-                Password
-              </label>
-
-              <input
-                type="password"
-                value={password}
-                onChange={(event) =>
-                  setPassword(
-                    event.target.value
-                  )
-                }
-                required
-                className="w-full rounded-lg border border-[#E8E2D8] px-4 py-2.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-[#0B7A33]/30"
-                placeholder="••••••••"
-              />
-
-            </div>
-
-
-            {error && (
-
-              <p className="text-[13px] text-[#C62828] bg-[#FBEAEA] rounded-lg px-3 py-2">
-
-                {error}
-
-              </p>
-
-            )}
-
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-lg bg-gradient-to-r from-[#07892F] to-[#049437] hover:from-[#067C2B] hover:to-[#038A31] text-white font-semibold py-3 transition-all disabled:opacity-60"
-            >
-
-              {loading
-                ? "Logging in..."
-                : "Log in"}
-
-            </button>
-
-          </form>
-
+        <div className="supervisor-login-intro">
+          <h1><span>Medical Supervisor</span><strong>Portal</strong></h1>
+          <i />
+          <p>Verify disease reports and<br />review agent issues.</p>
         </div>
 
-      </div>
+        <div className="supervisor-login-features">
+          <div><ClipboardList aria-hidden="true" /><strong>Monitor<br />Reports</strong></div>
+          <div><ShieldCheck aria-hidden="true" /><strong>Ensure<br />Data Integrity</strong></div>
+          <div><UsersRound aria-hidden="true" /><strong>Support<br />Public Health</strong></div>
+        </div>
 
+        <img className="supervisor-login-pulse" src={supervisorPulse} alt="" />
+        <img className="supervisor-login-skyline" src={supervisorSkyline} alt="" />
+      </section>
+
+      <main className="supervisor-login-panel">
+        <div className="supervisor-login-card">
+          <div className="supervisor-login-icon">
+            <img src={supervisorCard} alt="" />
+          </div>
+          <h2>Medical Supervisor Portal</h2>
+          <i className="supervisor-login-heading-rule" />
+
+          <form onSubmit={handleSubmit} className="supervisor-login-form" noValidate>
+            <label htmlFor="supervisor-username">
+              <User size={20} aria-hidden="true" />
+              Username
+            </label>
+            <div className="supervisor-login-input">
+              <User size={20} aria-hidden="true" />
+              <input
+                id="supervisor-username"
+                type="text"
+                value={username}
+                onChange={(event) => setUsername(event.target.value)}
+                placeholder="Enter your username"
+                autoComplete="username"
+                disabled={loading}
+                required
+              />
+            </div>
+
+            <label htmlFor="supervisor-password">
+              <LockKeyhole size={20} aria-hidden="true" />
+              Password
+            </label>
+            <div className="supervisor-login-input">
+              <LockKeyhole size={20} aria-hidden="true" />
+              <input
+                id="supervisor-password"
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                placeholder="Enter your password"
+                autoComplete="current-password"
+                disabled={loading}
+                required
+              />
+              <button
+                type="button"
+                className="supervisor-login-password-toggle"
+                onClick={() => setShowPassword((previous) => !previous)}
+                aria-label={showPassword ? "Hide password" : "Show password"}
+                disabled={loading}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+
+            {error && <div className="supervisor-login-error" role="alert">{error}</div>}
+
+            <button className="supervisor-login-submit" type="submit" disabled={loading}>
+              {loading ? <Loader2 size={21} className="supervisor-login-spinner" /> : <LogIn size={22} />}
+              <span>{loading ? "Logging in..." : "Log In"}</span>
+            </button>
+          </form>
+
+          <button className="supervisor-login-secure" type="button" onClick={onBack} disabled={loading}>
+            <ArrowLeft size={17} /><span>Back to home</span>
+          </button>
+        </div>
+      </main>
     </div>
   );
 }
