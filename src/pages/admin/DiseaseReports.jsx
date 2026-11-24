@@ -2206,6 +2206,7 @@ export default function DiseaseReports() {
   return (
     <div
       className="
+        admin-reports-page
         w-full
         pb-[10px]
       "
