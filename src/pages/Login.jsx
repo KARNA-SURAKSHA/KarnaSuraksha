@@ -466,7 +466,7 @@ function AgentLogin({
                     }
 
                   }}
-                  placeholder="agent_virajpet"
+                  placeholder="Enter your username"
                   autoComplete="username"
                   disabled={loading}
                   required
@@ -636,27 +636,6 @@ function AgentLogin({
           ================================================== */}
 
           <div className="agent-login-divider" />
-
-
-          {/* ==================================================
-              DEMO CREDENTIALS
-          ================================================== */}
-
-          <div className="agent-login-demo">
-
-            <p>
-              Demo credentials (after running the backend seed script):
-            </p>
-
-            <strong>
-              agent_virajpet / agent123
-            </strong>
-
-            <span>
-              (or any seeded agent username)
-            </span>
-
-          </div>
 
 
           {/* ==================================================
@@ -943,7 +922,7 @@ function AdminLogin({
                       event.target.value
                     )
                   }
-                  placeholder="e.g. admin123"
+                  placeholder="Enter your username"
                   autoComplete="username"
                   disabled={loading}
                   required
@@ -1045,14 +1024,6 @@ function AdminLogin({
           </form>
 
           <div className="admin-login-divider" />
-
-          <div className="admin-login-demo">
-            <p>
-              Demo credentials (after running the backend
-              seed script):
-            </p>
-            <strong>admin / admin123</strong>
-          </div>
 
           <button
             type="button"
@@ -1310,7 +1281,7 @@ function StandardLogin({
                 }
                 required
                 className="w-full rounded-lg border border-[#E8E2D8] px-4 py-2.5 text-[15px] focus:outline-none focus:ring-2 focus:ring-[#0B7A33]/30"
-                placeholder="e.g. medical_supervisor"
+                placeholder="Enter your username"
               />
 
             </div>
@@ -1362,26 +1333,6 @@ function StandardLogin({
             </button>
 
           </form>
-
-
-          <div className="mt-6 pt-5 border-t border-[#E8E2D8] text-[12.5px] text-[#7A8598] leading-relaxed">
-
-            Demo credentials (after running the backend seed script):{" "}
-
-
-            {role === "medical_supervisor" && (
-              <>
-
-                <b>
-                  medical_supervisor
-                </b>{" "}
-
-                / supervisor123
-
-              </>
-            )}
-
-          </div>
 
         </div>
 

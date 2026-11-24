@@ -352,25 +352,6 @@ export default function AgentShell({
 
                 </div>
 
-                {/* Logout */}
-
-                <button
-                  type="button"
-                  className="agent-profile-logout"
-                  onClick={
-                    handleLogout
-                  }
-                  role="menuitem"
-                >
-
-                  <LogOut size={16} />
-
-                  <span>
-                    Logout
-                  </span>
-
-                </button>
-
               </div>
             )}
 
@@ -493,6 +474,29 @@ export default function AgentShell({
           })}
 
         </nav>
+
+        {/* Logout (sidebar) */}
+
+        <div className="agent-sidebar-logout-wrap">
+
+          <button
+            type="button"
+            className="agent-nav-item agent-sidebar-logout"
+            onClick={handleLogout}
+          >
+
+            <LogOut
+              size={20}
+              strokeWidth={2.2}
+            />
+
+            <span>
+              Logout
+            </span>
+
+          </button>
+
+        </div>
 
         {/* Sidebar illustration */}
 

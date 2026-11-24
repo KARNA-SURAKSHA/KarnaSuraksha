@@ -390,6 +390,28 @@
 .ku-submit:active { transform: translateY(1px); }
 .ku-submit:focus-visible { outline: 3px solid #0b3d2c; outline-offset: 3px; }
 
+.ku-back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin-top: 14px;
+  padding: 8px 0 2px;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #0a7c54;
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.ku-back svg { width: 16px; height: 16px; flex: none; }
+.ku-back:hover { color: #086a49; text-decoration: underline; }
+.ku-back:focus-visible { outline: 3px solid #0b3d2c; outline-offset: 3px; border-radius: 6px; }
+
 
 /* ------------------------------------------------------------
    FOOTER (phone: stacked)
@@ -660,6 +682,14 @@
   }
 
   .ku-submit svg { width: calc(24 * var(--u)); height: calc(24 * var(--u)); }
+  .ku-back {
+    margin-top: calc(16 * var(--u));
+    padding: calc(6 * var(--u)) 0 0;
+    gap: calc(8 * var(--u));
+    font-size: calc(14 * var(--u));
+  }
+
+  .ku-back svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); }
 
   /* ---------------- footer ---------------- */
 

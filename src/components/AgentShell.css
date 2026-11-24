@@ -421,42 +421,6 @@
 
 
 /* ============================================================
-   LOGOUT
-============================================================ */
-
-.agent-profile-logout {
-  width: 100%;
-
-  display: flex;
-
-  align-items: center;
-
-  gap: 9px;
-
-  border: 0;
-
-  background: white;
-
-  padding: 12px 16px;
-
-  color: #c83d3d;
-
-  font-size: 12px;
-
-  font-weight: 700;
-
-  cursor: pointer;
-
-  text-align: left;
-}
-
-
-.agent-profile-logout:hover {
-  background: #fff6f6;
-}
-
-
-/* ============================================================
    SIDEBAR
 ============================================================ */
 
@@ -558,17 +522,55 @@
 
 
 /* ============================================================
+   SIDEBAR LOGOUT
+============================================================ */
+
+.agent-sidebar-logout-wrap {
+  margin-top: auto;
+
+  padding: 14px 20px 0;
+
+  border-top: 0;
+}
+
+
+.agent-sidebar-logout-wrap::before {
+  content: "";
+
+  display: block;
+
+  height: 1px;
+
+  margin: 0 0 14px;
+
+  background: var(--agent-border);
+}
+
+
+.agent-sidebar-logout {
+  color: #0f2e40;
+}
+
+
+.agent-sidebar-logout:hover {
+  background: #fff3f3;
+
+  color: #c83d3d;
+}
+
+
+/* ============================================================
    SIDEBAR ILLUSTRATION
 ============================================================ */
 
 .agent-sidebar-illustration {
   position: relative;
 
-  flex: 1;
+  flex: 0 1 170px;
 
-  min-height: 250px;
+  min-height: 110px;
 
-  margin-top: 18px;
+  margin-top: 10px;
 
   overflow: hidden;
 

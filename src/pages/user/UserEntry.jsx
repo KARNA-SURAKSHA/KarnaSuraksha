@@ -4,6 +4,7 @@ import {
 } from "react";
 
 import {
+  ArrowLeft,
   Eye,
   HeartPulse,
   ShieldCheck,
@@ -430,6 +431,24 @@ export default function UserEntry({
                 </button>
 
               </form>
+
+
+              {/* BACK TO HOME */}
+
+              <button
+                type="button"
+                className="ku-back"
+                onClick={onBack}
+              >
+
+                <ArrowLeft
+                  strokeWidth={1.9}
+                  aria-hidden="true"
+                />
+
+                Back to home
+
+              </button>
 
             </section>
 
