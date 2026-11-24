@@ -6118,9 +6118,13 @@ a,
   }
 
   .admin-supervisor-hero-img {
-    height: 115px !important;
+    right: 0 !important;
+    height: 112px !important;
     max-height: 100% !important;
-    width: auto !important;
+    width: 48% !important;
+    max-width: 48% !important;
+    object-fit: contain !important;
+    object-position: right bottom !important;
   }
 
   .admin-header-logo-img {

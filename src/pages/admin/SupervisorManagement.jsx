@@ -1084,13 +1084,13 @@ export default function SupervisorManagement({
 
         <div className="relative z-10 px-[16px] py-[16px] sm:px-[22px] sm:py-[21px]">
 
-          <div className="max-w-[58%] sm:max-w-[70%] md:max-w-[540px]">
+          <div className="max-w-[52%] pr-[4px] sm:max-w-[70%] md:max-w-[540px]">
 
-            <h1 className="text-[20px] sm:text-[23px] md:text-[26px] leading-[1.15] font-semibold tracking-[-0.035em] text-[#0B1730]">
+            <h1 className="text-[18px] sm:text-[23px] md:text-[26px] leading-[1.12] font-semibold tracking-[-0.035em] text-[#0B1730]">
               Medical Supervisor Management
             </h1>
 
-            <p className="mt-[6px] md:mt-[8px] text-[10px] sm:text-[11px] md:text-[12px] leading-[1.45] md:leading-[1.65] text-[#52606D]">
+            <p className="mt-[6px] md:mt-[8px] text-[9px] sm:text-[11px] md:text-[12px] leading-[1.38] md:leading-[1.65] text-[#52606D]">
               Medical supervisors are responsible for all taluks within their assigned district and oversee reporting, agents, and data quality.
             </p>
 
@@ -1228,7 +1228,7 @@ export default function SupervisorManagement({
 
             <div className="flex items-center justify-between gap-3">
 
-              <div>
+              <div className="hidden sm:block">
 
                 <h2 className="text-[10px] font-bold tracking-[0.02em] text-[#172B43]">
                   SUPERVISORS
@@ -1240,12 +1240,12 @@ export default function SupervisorManagement({
 
               </div>
 
-              <div className="flex items-center gap-[7px]">
+              <div className="ml-auto flex w-full items-center gap-[7px] sm:ml-0 sm:w-auto">
 
                 <button
                   type="button"
                   onClick={openAdd}
-                  className="inline-flex h-[31px] items-center gap-[6px] rounded-[6px] bg-[#07843D] px-[12px] text-[10px] font-semibold text-white hover:bg-[#066F35]"
+                    className="inline-flex h-[44px] sm:h-[31px] flex-1 sm:flex-none items-center justify-center gap-[8px] rounded-[7px] bg-[#07843D] px-[12px] text-[12px] sm:text-[10px] font-semibold text-white hover:bg-[#066F35]"
                 >
                   <Plus size={13} />
                   Add Supervisor
@@ -1254,7 +1254,7 @@ export default function SupervisorManagement({
                 <button
                   type="button"
                   onClick={exportCsv}
-                  className="hidden sm:inline-flex h-[31px] items-center gap-[6px] rounded-[6px] border border-[#D8E1DC] bg-white px-[11px] text-[10px] font-medium text-[#34495A] hover:bg-[#F7FAF8]"
+                  className="inline-flex h-[44px] sm:h-[31px] flex-1 sm:flex-none items-center justify-center gap-[8px] rounded-[7px] border border-[#D8E1DC] bg-white px-[11px] text-[12px] sm:text-[10px] font-medium text-[#34495A] hover:bg-[#F7FAF8]"
                 >
                   <Download size={13} />
                   Export
@@ -1267,9 +1267,9 @@ export default function SupervisorManagement({
 
             {/* FILTERS */}
 
-            <div className="mt-[10px] flex items-center gap-[7px]">
+            <div className="mt-[10px] grid grid-cols-2 gap-[7px] sm:flex sm:items-center">
 
-              <div className="relative flex-1">
+              <div className="hidden sm:block relative flex-1">
 
                 <Search
                   size={14}
@@ -1290,7 +1290,7 @@ export default function SupervisorManagement({
               </div>
 
 
-              <div className="hidden sm:block relative w-[138px]">
+              <div className="relative w-full sm:w-[138px]">
 
                 <select
                   value={districtFilter}
@@ -1326,7 +1326,7 @@ export default function SupervisorManagement({
               </div>
 
 
-              <div className="hidden sm:block relative w-[112px]">
+              <div className="relative w-full sm:w-[112px]">
 
                 <select
                   value={statusFilter}
@@ -1378,9 +1378,94 @@ export default function SupervisorManagement({
           </div>
 
 
+          {/* MOBILE SUPERVISOR TABLE */}
+
+          <div className="md:hidden overflow-hidden">
+            <table className="w-full table-fixed border-collapse">
+              <thead>
+                <tr className="border-b border-[#E7ECE9] bg-[#FCFDFC]">
+                  <th className="w-[28px] px-[6px] py-[10px] text-left">
+                    <span className="sr-only">Select</span>
+                  </th>
+                  <th className="w-[86px] px-[2px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">SUPERVISOR</th>
+                  <th className="w-[52px] px-[2px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">ASSIGNED DISTRICT</th>
+                  <th className="w-[46px] px-[2px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">TALUKS MANAGED</th>
+                  <th className="w-[52px] px-[2px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">SUPERVISING AGENTS</th>
+                  <th className="w-[48px] px-[2px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">REPORTS THIS WEEK</th>
+                  <th className="w-[52px] px-[4px] py-[10px] text-left text-[7.5px] font-bold leading-[1.25] text-[#52606D]">STATUS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {loading ? (
+                  <tr>
+                    <td colSpan="7" className="h-[120px] text-center text-[10px] text-[#68737D]">
+                      Loading...
+                    </td>
+                  </tr>
+                ) : supervisors.length === 0 ? (
+                  <tr>
+                    <td colSpan="7" className="h-[120px] text-center text-[10px] text-[#68737D]">
+                      No medical supervisors found.
+                    </td>
+                  </tr>
+                ) : supervisors.map((supervisor) => {
+                  const active = Boolean(supervisor.is_active);
+                  return (
+                    <tr
+                      key={supervisor.id}
+                      onClick={() => setSelected(supervisor)}
+                      className="cursor-pointer border-b border-[#EDF0EE] bg-white"
+                    >
+                      <td className="px-[6px] py-[10px]">
+                        <input type="checkbox" checked={selectedIds.includes(supervisor.id)} onChange={(event) => { event.stopPropagation(); toggleSelected(supervisor.id); }} onClick={(event) => event.stopPropagation()} className="h-[16px] w-[16px] accent-[#07843D]" />
+                      </td>
+                      <td className="px-[2px] py-[10px]">
+                        <div className="flex items-center gap-[5px]">
+                          <div className="flex h-[30px] w-[30px] shrink-0 items-center justify-center rounded-full bg-[#E8F5EC] text-[9px] font-bold text-[#087A32]">
+                            {getInitials(supervisor.full_name)}
+                          </div>
+                          <div className="min-w-0">
+                            <p className="truncate text-[9px] font-bold text-[#172B43]">
+                              {supervisor.full_name || "Medical Supervisor"}
+                            </p>
+                            <p className="mt-[2px] truncate text-[7px] text-[#7B8794]">
+                              {supervisor.username || "medical_supervisor"}
+                            </p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-[2px] py-[10px] text-[9px] font-semibold leading-[1.2] text-[#172B43]">
+                        {getDistrictName(supervisor)}
+                        <span className="mt-[2px] block text-[7px] font-normal text-[#7B8794]">District</span>
+                      </td>
+                      <td className="px-[2px] py-[10px] text-[9px] font-semibold text-[#172B43]">
+                        {getTalukCount(supervisor)}
+                        <span className="mt-[2px] block text-[7px] font-normal text-[#7B8794]">Taluks</span>
+                      </td>
+                      <td className="px-[2px] py-[10px] text-[9px] font-semibold text-[#172B43]">
+                        {getAgentCount(supervisor)}
+                        <span className="mt-[2px] block text-[7px] font-normal text-[#7B8794]">Agents</span>
+                      </td>
+                      <td className="px-[2px] py-[10px] text-[9px] font-semibold text-[#172B43]">
+                        {getReportsThisWeek(supervisor)}
+                        <span className="mt-[2px] block text-[7px] font-normal text-[#7B8794]">Reports</span>
+                      </td>
+                      <td className="px-[4px] py-[10px]">
+                        <span className={`inline-flex rounded-[5px] border px-[5px] py-[4px] text-[8px] font-bold ${statusClasses(active)}`}>
+                          {active ? "Active" : "Inactive"}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+
+
           {/* TABLE */}
 
-          <div className="overflow-x-auto">
+          <div className="hidden md:block overflow-x-auto">
 
             <table className="w-full min-w-[790px] border-collapse">
 
@@ -1759,7 +1844,7 @@ export default function SupervisorManagement({
             DETAILS
         ==================================================== */}
 
-        <aside className="rounded-[11px] border border-[#E3E8E5] bg-white overflow-hidden">
+        <aside className="block rounded-[11px] border border-[#E3E8E5] bg-white overflow-hidden">
 
           <div className="flex items-center justify-between border-b border-[#E7ECE9] px-[14px] py-[11px]">
 
