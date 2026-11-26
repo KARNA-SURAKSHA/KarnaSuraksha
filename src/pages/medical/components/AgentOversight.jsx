@@ -3,6 +3,7 @@ import { useMemo, useRef, useState } from "react";
 import {
   AlertTriangle,
   CheckCircle2,
+  Clock3,
   FileText,
   FileUp,
   MapPin,
@@ -1666,6 +1667,8 @@ export default function AgentOversight({
         min-h-full
         space-y-[18px]
         pb-8
+        max-[650px]:space-y-3
+        max-[650px]:pb-4
       "
     >
 
@@ -1679,6 +1682,9 @@ export default function AgentOversight({
           h-[112px]
           overflow-hidden
           bg-white
+          max-[650px]:rounded-[14px]
+          max-[650px]:h-[132px]
+          max-[650px]:bg-[#F0F8F3]
         "
       >
 
@@ -1688,6 +1694,8 @@ export default function AgentOversight({
             z-10
             px-[18px]
             pt-[4px]
+            max-[650px]:px-3
+            max-[650px]:pt-2
           "
         >
 
@@ -1699,6 +1707,10 @@ export default function AgentOversight({
               leading-[34px]
               tracking-[-.8px]
               text-[#0D1725]
+              max-[650px]:max-w-[48%]
+              max-[650px]:text-[16px]
+              max-[650px]:leading-[19px]
+              max-[650px]:tracking-[-.4px]
             "
           >
             Agent Oversight &amp; Weekly Compliance
@@ -1710,6 +1722,10 @@ export default function AgentOversight({
               text-[14px]
               leading-[20px]
               text-[#1B2939]
+              max-[650px]:mt-1
+              max-[650px]:max-w-[48%]
+              max-[650px]:text-[9px]
+              max-[650px]:leading-[12px]
             "
           >
             Monitor weekly agent reporting compliance (1 report/week cycle)
@@ -1728,9 +1744,12 @@ export default function AgentOversight({
             absolute
             right-0
             top-0
+            z-0
             h-[112px]
             w-[48%]
             overflow-hidden
+            max-[650px]:h-[132px]
+            max-[650px]:w-[52%]
           "
         >
 
@@ -1745,6 +1764,9 @@ export default function AgentOversight({
               from-white
               via-white/80
               to-transparent
+              max-[650px]:from-[#F0F8F3]
+              max-[650px]:via-[#F0F8F3]/80
+              max-[650px]:w-[10%]
             "
           />
 
@@ -1758,6 +1780,7 @@ export default function AgentOversight({
               w-full
               object-cover
               object-right
+              max-[650px]:object-[82%_bottom]
             "
           />
 
@@ -1775,6 +1798,8 @@ export default function AgentOversight({
           grid
           gap-4
           xl:grid-cols-3
+          max-[650px]:grid-cols-3
+          max-[650px]:gap-2
         "
       >
 
@@ -1843,13 +1868,16 @@ export default function AgentOversight({
             border-b
             border-[#E5E9E7]
             px-[21px]
+            max-[650px]:h-[50px]
+            max-[650px]:gap-2
+            max-[650px]:px-3
           "
         >
 
           <FileText
             size={22}
             strokeWidth={2}
-            className="text-[#008842]"
+            className="text-[#008842] max-[650px]:h-[18px] max-[650px]:w-[18px]"
           />
 
           <h2
@@ -1859,6 +1887,8 @@ export default function AgentOversight({
               font-semibold
               tracking-[-.15px]
               text-[#102033]
+              max-[650px]:text-[13px]
+              max-[650px]:leading-[17px]
             "
           >
             Field Agent Weekly Compliance Roster
@@ -1870,6 +1900,7 @@ export default function AgentOversight({
         <div
           className="
             overflow-x-auto
+            max-[650px]:overscroll-x-contain
           "
         >
 
@@ -1877,6 +1908,8 @@ export default function AgentOversight({
             className="
               w-full
               min-w-[980px]
+              max-[650px]:min-w-[520px]
+              max-[650px]:table-fixed
               border-collapse
               text-left
             "
@@ -1891,30 +1924,34 @@ export default function AgentOversight({
                   text-[10px]
                   font-bold
                   text-[#102033]
+                  max-[650px]:h-[44px]
+                  max-[650px]:bg-[#EFF8F2]
+                  max-[650px]:text-[9px]
+                  max-[650px]:leading-[11px]
                 "
               >
 
-                <th className="px-[18px]">
+                <th className="px-[18px]                 max-[650px]:w-[25%] max-[650px]:px-1">
                   Agent Name
                 </th>
 
-                <th className="px-[18px]">
+                <th className="px-[18px]                 max-[650px]:w-[16%] max-[650px]:px-1">
                   Assigned Region
                 </th>
 
-                <th className="px-[18px]">
+                <th className="px-[18px]                 max-[650px]:w-[14%] max-[650px]:px-1">
                   Last Submission
                 </th>
 
-                <th className="px-[18px]">
+                <th className="px-[18px]                 max-[650px]:w-[13%] max-[650px]:px-1">
                   Monthly History
                 </th>
 
-                <th className="px-[18px]">
+                <th className="px-[18px]                 max-[650px]:w-[20%] max-[650px]:px-1">
                   Status Tag
                 </th>
 
-                <th className="px-[18px] text-right">
+                <th className="px-[18px] text-right max-[650px]:sticky max-[650px]:right-0 max-[650px]:z-10 max-[650px]:w-[12%] max-[650px]:bg-[#EFF8F2] max-[650px]:px-1">
                   Action
                 </th>
 
@@ -1941,18 +1978,20 @@ export default function AgentOversight({
                         border-[#EDF0EF]
                         transition
                         hover:bg-[#FBFDFC]
+                        max-[650px]:h-[56px]
                       "
                     >
 
                       {/* AGENT */}
 
-                      <td className="px-[18px]">
+                      <td className="px-[18px] max-[650px]:px-1">
 
                         <div
                           className="
                             flex
                             items-center
                             gap-[10px]
+                            max-[650px]:gap-1
                           "
                         >
 
@@ -1969,6 +2008,9 @@ export default function AgentOversight({
                               text-[10px]
                               font-semibold
                               text-[#356FD1]
+                              max-[650px]:h-7
+                              max-[650px]:w-7
+                              max-[650px]:text-[8px]
                             "
                           >
                             {getInitials(
@@ -1982,6 +2024,11 @@ export default function AgentOversight({
                               text-[11px]
                               font-semibold
                               text-[#172536]
+                              max-[650px]:overflow-visible
+                              max-[650px]:text-[8px]
+                              max-[650px]:leading-[12px]
+                              max-[650px]:text-clip
+                              max-[650px]:whitespace-normal
                             "
                           >
                             {
@@ -1996,7 +2043,7 @@ export default function AgentOversight({
 
                       {/* REGION */}
 
-                      <td className="px-[18px]">
+                      <td className="px-[18px] max-[650px]:px-1">
 
                         <div
                           className="
@@ -2005,12 +2052,15 @@ export default function AgentOversight({
                             gap-[7px]
                             text-[10px]
                             text-[#546579]
+                            max-[650px]:gap-1
+                            max-[650px]:text-[9px]
+                            max-[650px]:leading-[11px]
                           "
                         >
 
                           <MapPin
                             size={15}
-                            className="text-[#008B45]"
+                            className="text-[#008B45] max-[650px]:h-3 max-[650px]:w-3"
                           />
 
                           {
@@ -2024,7 +2074,7 @@ export default function AgentOversight({
 
                       {/* LAST SUBMISSION */}
 
-                      <td className="px-[18px]">
+                      <td className="px-[18px] max-[650px]:px-1">
 
                         {agent.lastSubmission ? (
 
@@ -2035,6 +2085,8 @@ export default function AgentOversight({
                                 text-[10px]
                                 font-medium
                                 text-[#172536]
+                                max-[650px]:text-[8px]
+                                max-[650px]:leading-[10px]
                               "
                             >
                               {
@@ -2048,6 +2100,8 @@ export default function AgentOversight({
                               className="
                                 text-[8px]
                                 text-[#8995A2]
+                                max-[650px]:text-[8px]
+                                max-[650px]:leading-[9px]
                               "
                             >
                               {
@@ -2065,6 +2119,7 @@ export default function AgentOversight({
                             className="
                               text-[10px]
                               text-[#8995A2]
+                              max-[650px]:text-[7px]
                             "
                           >
                             No submission
@@ -2077,13 +2132,14 @@ export default function AgentOversight({
 
                       {/* HISTORY */}
 
-                      <td className="px-[18px]">
+                      <td className="px-[18px] max-[650px]:px-1">
 
                         <div
                           className="
                             flex
                             items-center
                             gap-2
+                            max-[650px]:gap-1
                           "
                         >
 
@@ -2093,6 +2149,7 @@ export default function AgentOversight({
                               text-[10px]
                               font-medium
                               text-[#253547]
+                              max-[650px]:hidden
                             "
                           >
                             {
@@ -2120,6 +2177,8 @@ export default function AgentOversight({
                                     h-[9px]
                                     w-[9px]
                                     rounded-[2px]
+                                    max-[650px]:h-[7px]
+                                    max-[650px]:w-[5px]
                                     ${
                                       submitted
                                         ? "bg-[#078B45]"
@@ -2140,7 +2199,7 @@ export default function AgentOversight({
 
                       {/* STATUS */}
 
-                      <td className="px-[18px]">
+                      <td className="px-[18px] max-[650px]:px-1">
 
                         <span
                           className={`
@@ -2152,6 +2211,11 @@ export default function AgentOversight({
                             py-[7px]
                             text-[9px]
                             font-medium
+                            max-[650px]:gap-[2px]
+                            max-[650px]:rounded-[5px]
+                            max-[650px]:px-1
+                            max-[650px]:py-1
+                            max-[650px]:text-[8px]
                             ${
                               agent.status.tone ===
                               "green"
@@ -2186,6 +2250,11 @@ export default function AgentOversight({
                         className="
                           px-[18px]
                           text-right
+                          max-[650px]:px-1
+                          max-[650px]:sticky
+                          max-[650px]:right-0
+                          max-[650px]:z-10
+                          max-[650px]:bg-white
                         "
                       >
 
@@ -2210,6 +2279,9 @@ export default function AgentOversight({
                             shadow-[0_3px_7px_rgba(0,126,58,.18)]
                             transition
                             hover:bg-[#007637]
+                            max-[650px]:h-7
+                            max-[650px]:w-[52px]
+                            max-[650px]:text-[9px]
                           "
                         >
                           Report
@@ -2273,17 +2345,27 @@ export default function AgentOversight({
             border-[#E5E9E7]
             px-[21px]
             py-4
+            max-[650px]:px-3
+            max-[650px]:py-3
           "
         >
 
           <h2
             className="
+              flex
+              items-center
+              gap-2
               m-0
               text-[17px]
               font-semibold
               text-[#102033]
+              max-[650px]:text-[14px]
             "
           >
+            <Clock3
+              size={20}
+              className="hidden text-[#087A32] max-[650px]:block"
+            />
             Previously Filed Agent Complaints
           </h2>
 
@@ -2292,6 +2374,7 @@ export default function AgentOversight({
               mt-1
               text-[10px]
               text-[#8792A2]
+              max-[650px]:hidden
             "
           >
             Complaints already submitted by this Medical Supervisor
@@ -2300,7 +2383,7 @@ export default function AgentOversight({
         </div>
 
 
-        <div className="p-4">
+        <div className="p-4 max-[650px]:p-2">
 
           {issues.length ? (
 
@@ -2407,8 +2490,13 @@ export default function AgentOversight({
                 text-center
                 text-[11px]
                 text-[#718096]
+                max-[650px]:py-3
               "
             >
+              <FileText
+                size={22}
+                className="mx-auto mb-1 text-[#8090A4] max-[650px]:block"
+              />
               No complaints have been filed yet.
             </div>
 
@@ -2530,6 +2618,14 @@ function KpiCard({
         px-5
         py-5
         shadow-[0_1px_3px_rgba(15,23,42,.03)]
+        max-[650px]:min-h-[110px]
+        max-[650px]:flex-col
+        max-[650px]:justify-center
+        max-[650px]:gap-1
+        max-[650px]:rounded-[14px]
+        max-[650px]:px-1
+        max-[650px]:py-2
+        max-[650px]:text-center
       "
     >
 
@@ -2547,6 +2643,8 @@ function KpiCard({
               ? "bg-[#FFF0D4] text-[#E88B00]"
               : "bg-[#E5F4EB] text-[#07883F]"
           }
+          max-[650px]:h-9
+          max-[650px]:w-9
         `}
       >
         {icon}
@@ -2561,6 +2659,8 @@ function KpiCard({
             font-normal
             leading-5
             text-[#172536]
+            max-[650px]:text-[10px]
+            max-[650px]:leading-3
           "
         >
           {label}
@@ -2572,6 +2672,8 @@ function KpiCard({
             font-bold
             leading-[31px]
             text-[#071426]
+            max-[650px]:text-[22px]
+            max-[650px]:leading-[24px]
           "
         >
           {value}

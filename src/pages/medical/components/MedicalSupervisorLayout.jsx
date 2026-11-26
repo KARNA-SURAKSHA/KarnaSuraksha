@@ -342,13 +342,19 @@ export default function MedicalSupervisorLayout({
   return (
 
     <div
-      className="
+      className={`
         ms-supervisor-shell
         min-h-screen
         w-full
         bg-[#FBFCFB]
         text-[#17233D]
-      "
+        ${
+          activeTab === "alerts" ||
+          activeTab === "home-relief"
+            ? "ms-supervisor-shell-footer-bottom"
+            : ""
+        }
+      `}
     >
 
       {/* ======================================================
@@ -1257,11 +1263,11 @@ export default function MedicalSupervisorLayout({
 
         </div>
 
-      </main>
+        <div className="ms-supervisor-mobile-footer">
+          <AgentFooter />
+        </div>
 
-      <div className="ms-supervisor-mobile-footer">
-        <AgentFooter />
-      </div>
+      </main>
 
     </div>
 

@@ -1091,7 +1091,7 @@ export default function HomeReliefManagement() {
           KPI CARDS
       ====================================================== */}
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-3 gap-2 md:gap-4">
 
         <Metric
           title="Total Remedies"
@@ -2194,7 +2194,7 @@ function Metric({
 }) {
   return (
     <div
-      className={`rounded-2xl border p-4 ${
+      className={`flex min-w-0 flex-col rounded-2xl border p-2.5 md:p-4 ${
         tone === "green"
           ? "border-[#DCEDE2] bg-[#F4FBF6]"
           : tone === "blue"
@@ -2203,13 +2203,13 @@ function Metric({
       }`}
     >
 
-      <div className="text-[10px] text-[#718096]">
+      <div className="h-[26px] break-words text-[8px] leading-[1.25] text-[#718096] md:h-auto md:text-[10px]">
         {
           title
         }
       </div>
 
-      <div className="mt-1 text-[28px] font-semibold">
+      <div className="mt-1 text-[20px] font-semibold md:text-[28px]">
         {
           value
         }

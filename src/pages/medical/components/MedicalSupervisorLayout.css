@@ -682,6 +682,19 @@
   display: none;
 }
 
+.ms-supervisor-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.ms-supervisor-main-inner {
+  flex: 1;
+}
+
+.ms-supervisor-mobile-footer {
+  display: block;
+}
+
 @media (max-width: 1023px) {
   .ms-supervisor-header {
     margin-left: 0;
@@ -690,8 +703,8 @@
 
 @media (max-width: 780px) {
   .ms-supervisor-shell {
-    display: flex;
-    flex-direction: column;
+    display: block;
+    min-height: auto;
   }
 
   .ms-supervisor-header {
@@ -777,8 +790,9 @@
   }
 
   .ms-supervisor-main {
+    display: block;
     width: 100%;
-    min-height: calc(100vh - 64px);
+    min-height: 0;
     margin-left: 0;
     padding-top: 64px;
     overflow-x: hidden;
@@ -790,6 +804,19 @@
 
   .ms-supervisor-mobile-footer {
     display: block;
+  }
+
+  .ms-supervisor-shell-footer-bottom {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+  }
+
+  .ms-supervisor-shell-footer-bottom .ms-supervisor-main {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
   }
 }
 
