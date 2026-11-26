@@ -416,9 +416,6 @@ export default function MedicalSupervisorPortal({
     reports:
       [],
 
-    analytics:
-      null,
-
     riskMap:
       [],
 
@@ -486,7 +483,6 @@ export default function MedicalSupervisorPortal({
 
           const [
             overview,
-            analytics,
             riskMap,
             emerging,
             agents,
@@ -495,10 +491,6 @@ export default function MedicalSupervisorPortal({
           ] =
             await Promise.all([
               api.getMedicalOverview(),
-
-              api.getMedicalAnalytics(
-                8
-              ),
 
               api.getMedicalRiskMap(),
 
@@ -521,8 +513,6 @@ export default function MedicalSupervisorPortal({
 
             reports:
               normalizedReports,
-
-            analytics,
 
             riskMap:
               Array.isArray(
@@ -1059,8 +1049,8 @@ export default function MedicalSupervisorPortal({
 
           <SurveillanceAnalytics
 
-            data={
-              data.analytics
+            districtName={
+              districtName
             }
 
           />

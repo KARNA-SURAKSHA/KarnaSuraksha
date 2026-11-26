@@ -10,7 +10,10 @@ import SpreadCasesTable from "./SpreadCasesTable";
  * Same charts/table as before (moved out of the Disease Risk Map page), with
  * its own disease / current-forecast controls and data fetching.
  */
-export default function SpreadAnalytics({ district = "" }) {
+export default function SpreadAnalytics({
+  district = "",
+  casesDistrict = "",
+}) {
   const [diseases, setDiseases] = useState([]);
   const [disease, setDisease] = useState("");
   const [mode, setMode] = useState("current");
@@ -194,7 +197,10 @@ export default function SpreadAnalytics({ district = "" }) {
       />
 
       {/* ================= ALL CASES TABLE ================= */}
-      <SpreadCasesTable key={reloadKey} />
+      <SpreadCasesTable
+        key={reloadKey}
+        district={casesDistrict}
+      />
     </div>
   );
 }

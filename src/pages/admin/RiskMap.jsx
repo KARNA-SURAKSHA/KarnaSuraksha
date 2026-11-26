@@ -18,9 +18,18 @@ import SpreadMapLazy from "../../components/spread/SpreadMapLazy";
 
 export default function RiskMap({
   location,
+  predictions: providedPredictions,
 }) {
-  const [predictions, setPredictions] =
+  const [loadedPredictions, setLoadedPredictions] =
     useState([]);
+
+  const hasProvidedPredictions =
+    Array.isArray(providedPredictions);
+
+  const predictions =
+    hasProvidedPredictions
+      ? providedPredictions
+      : loadedPredictions;
 
   const [disease, setDisease] =
     useState("");
@@ -36,6 +45,9 @@ export default function RiskMap({
     useState(null);
 
   useEffect(() => {
+    if (hasProvidedPredictions) {
+      return undefined;
+    }
 
     api
       .getLatestPredictions({
@@ -46,7 +58,7 @@ export default function RiskMap({
           location.taluk?.id,
       })
 
-      .then(setPredictions)
+      .then(setLoadedPredictions)
 
       .catch((e) =>
         setError(e.message)
@@ -56,6 +68,7 @@ export default function RiskMap({
     location.state?.id,
     location.district?.id,
     location.taluk?.id,
+    hasProvidedPredictions,
   ]);
 
   const filtered = useMemo(

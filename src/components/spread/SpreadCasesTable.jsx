@@ -50,12 +50,28 @@ function weekLabel(w) {
   return w ? `Week ${w % 100}, ${Math.floor(w / 100)}` : "";
 }
 
-export default function SpreadCasesTable() {
+export default function SpreadCasesTable({
+  district = "",
+}) {
   const [state, setState] = useState({ rows: [], week: null, loading: true, error: "" });
   const [query, setQuery] = useState("");
   const [disease, setDisease] = useState("All");
   const [sort, setSort] = useState({ key: "cases", dir: "desc" });
   const [limit, setLimit] = useState(15);
+  const districtKey = district.trim().toLowerCase();
+
+  const scopedRows = useMemo(
+    () =>
+      districtKey
+        ? state.rows.filter(
+            (row) =>
+              String(row.district || "")
+                .trim()
+                .toLowerCase() === districtKey
+          )
+        : state.rows,
+    [state.rows, districtKey]
+  );
 
   useEffect(() => {
     const controller = new AbortController();
@@ -72,13 +88,13 @@ export default function SpreadCasesTable() {
   }, []);
 
   const diseases = useMemo(
-    () => [...new Set(state.rows.map((r) => r.disease))].sort(),
-    [state.rows]
+    () => [...new Set(scopedRows.map((r) => r.disease))].sort(),
+    [scopedRows]
   );
 
   const visible = useMemo(() => {
     const q = query.trim().toLowerCase();
-    const filtered = state.rows.filter(
+    const filtered = scopedRows.filter(
       (r) =>
         (disease === "All" || r.disease === disease) &&
         (!q ||
@@ -99,7 +115,7 @@ export default function SpreadCasesTable() {
       if (typeof x === "string") return x.localeCompare(y) * dir;
       return (x - y) * dir;
     });
-  }, [state.rows, query, disease, sort]);
+  }, [scopedRows, query, disease, sort]);
 
   const totalCases = visible.reduce((s, r) => s + r.cases, 0);
 
@@ -120,10 +136,15 @@ export default function SpreadCasesTable() {
       <div className="mb-3 flex flex-wrap items-center gap-3">
         <div>
           <h3 className="flex items-center gap-2 text-[15px] font-bold text-[#13264B]">
-            <Table2 size={16} /> All reported cases in Karnataka
+            <Table2 size={16} />{" "}
+            {district
+              ? `All reported cases in ${district}`
+              : "All reported cases in Karnataka"}
           </h3>
           <p className="text-[12px] text-[#667085]">
-            Latest report for every taluk and disease{state.week ? ` · up to ${weekLabel(state.week)}` : ""}.
+            Latest report for every taluk and disease
+            {district ? ` in ${district}` : ""}
+            {state.week ? ` · up to ${weekLabel(state.week)}` : ""}.
             Trend compares with the taluk&apos;s previous report.
           </p>
         </div>
