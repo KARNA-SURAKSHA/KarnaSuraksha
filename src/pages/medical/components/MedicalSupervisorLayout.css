@@ -676,3 +676,473 @@
     padding-right: 12px;
   }
 }
+
+.ms-mobile-brand,
+.ms-supervisor-mobile-footer {
+  display: none;
+}
+
+@media (max-width: 1023px) {
+  .ms-supervisor-header {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 780px) {
+  .ms-supervisor-shell {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .ms-supervisor-header {
+    height: 64px;
+  }
+
+  .ms-supervisor-header-inner {
+    gap: 5px;
+    padding: 0 10px;
+  }
+
+  .ms-mobile-brand {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+
+  .ms-mobile-brand img {
+    width: 35px;
+    height: 38px;
+    flex: none;
+    object-fit: contain;
+  }
+
+  .ms-mobile-brand strong,
+  .ms-mobile-brand span {
+    display: block;
+    white-space: nowrap;
+  }
+
+  .ms-mobile-brand strong {
+    color: #087a32;
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .ms-mobile-brand span {
+    margin-top: 1px;
+    color: #475569;
+    font-size: 9px;
+    line-height: 12px;
+  }
+
+  .ms-supervisor-header-controls {
+    gap: 3px;
+    margin-left: auto;
+  }
+
+  .ms-supervisor-notifications,
+  .ms-supervisor-menu {
+    width: 32px;
+    height: 34px;
+    flex: none;
+  }
+
+  .ms-supervisor-notifications {
+    border-radius: 9px;
+  }
+
+  .ms-supervisor-profile-button {
+    gap: 4px;
+    padding: 2px;
+  }
+
+  .ms-supervisor-profile-avatar {
+    width: 34px;
+    height: 34px;
+  }
+
+  .ms-supervisor-profile-chevron {
+    width: 13px;
+    height: 13px;
+  }
+
+  .ms-supervisor-menu {
+    order: 3;
+    border: 1px solid #dce4de;
+    border-radius: 9px;
+    background: #ffffff;
+  }
+
+  .ms-supervisor-main {
+    width: 100%;
+    min-height: calc(100vh - 64px);
+    margin-left: 0;
+    padding-top: 64px;
+    overflow-x: hidden;
+  }
+
+  .ms-supervisor-main-inner {
+    padding: 12px 10px 22px;
+  }
+
+  .ms-supervisor-mobile-footer {
+    display: block;
+  }
+}
+
+@media (max-width: 390px) {
+  .ms-supervisor-header-inner {
+    padding-right: 7px;
+    padding-left: 8px;
+  }
+
+  .ms-mobile-brand {
+    gap: 5px;
+  }
+
+  .ms-mobile-brand img {
+    width: 31px;
+  }
+
+  .ms-mobile-brand strong {
+    font-size: 13px;
+  }
+
+  .ms-mobile-brand span {
+    font-size: 8px;
+  }
+
+  .ms-supervisor-header-controls {
+    gap: 1px;
+  }
+}
+
+@media (max-width: 700px) {
+  .ms-phone-overview .ms-phone-hero {
+    isolation: isolate;
+    height: 78px;
+    min-height: 0;
+    margin-bottom: 9px;
+    border-radius: 15px;
+    background: #edf7ef;
+  }
+
+  .ms-phone-overview .ms-phone-hero-copy {
+    z-index: 2;
+    width: 76%;
+    height: 100%;
+    padding: 7px 9px 0;
+    background: linear-gradient(90deg, #edf7ef 0%, #edf7ef 68%, rgba(237, 247, 239, 0) 100%);
+  }
+
+  .ms-phone-overview .ms-phone-hero h1 {
+    font-size: 15px;
+    line-height: 19px;
+    letter-spacing: -0.35px;
+  }
+
+  .ms-phone-overview .ms-phone-hero h1 span {
+    font-size: 14px;
+  }
+
+  .ms-phone-overview .ms-phone-hero p {
+    position: relative;
+    z-index: 2;
+    margin-top: 1px;
+    font-size: 9px;
+    line-height: 13px;
+  }
+
+  .ms-phone-overview .ms-phone-hero-copy > div {
+    gap: 5px;
+    margin-top: 5px;
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .ms-phone-overview .ms-phone-hero-copy > div svg {
+    width: 11px;
+    height: 11px;
+  }
+
+  .ms-phone-overview .ms-phone-skyline {
+    width: 82%;
+    height: 78px;
+    opacity: 1;
+    object-fit: contain;
+    object-position: right bottom;
+    mix-blend-mode: multiply;
+  }
+
+  .ms-phone-overview .ms-phone-kpis {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi {
+    min-width: 0;
+    height: 70px;
+    gap: 8px;
+    padding: 7px 8px;
+    border-radius: 12px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:first-child {
+    width: 39px;
+    height: 39px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:first-child svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:last-child {
+    min-width: 0;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:last-child > div:first-child {
+    white-space: normal;
+    font-size: 8px;
+    line-height: 10px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:last-child > div:nth-child(2) {
+    margin-top: 2px;
+    font-size: 21px;
+    line-height: 22px;
+  }
+
+  .ms-phone-overview .ms-phone-kpi > div:last-child > div:nth-child(3),
+  .ms-phone-overview .ms-phone-kpi > div:last-child > div:nth-child(3) span {
+    margin-top: 2px;
+    font-size: 7px;
+    line-height: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-kpis + .ms-phone-panels {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    height: auto;
+    gap: 8px;
+    margin-bottom: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-panel {
+    grid-column: 1 / -1;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .ms-phone-overview .ms-phone-alerts-panel,
+  .ms-phone-overview .ms-phone-risk-panel {
+    min-width: 0;
+    min-height: 158px;
+  }
+
+  .ms-phone-overview .ms-phone-panel-header {
+    height: 37px;
+    gap: 3px;
+    padding-right: 8px;
+    padding-left: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-panel-header h2 {
+    gap: 3px;
+    font-size: 8px;
+    line-height: 10px;
+    white-space: nowrap;
+  }
+
+  .ms-phone-overview .ms-phone-panel-header h2 svg {
+    width: 13px;
+    height: 13px;
+  }
+
+  .ms-phone-overview .ms-phone-panel-header button {
+    gap: 0;
+    font-size: 7px;
+    line-height: 9px;
+    white-space: nowrap;
+  }
+
+  .ms-phone-overview .ms-phone-panel-header button svg {
+    width: 10px;
+    height: 10px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-panel > div:nth-child(2) {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table th {
+    padding-bottom: 5px;
+    font-size: 7px;
+    line-height: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td {
+    font-size: 7px;
+    line-height: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table tbody tr {
+    height: 31px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:first-child {
+    padding-right: 3px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:first-child > div {
+    gap: 4px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:first-child > div > span:first-child,
+  .ms-phone-overview .ms-phone-disease-table td:first-child > div > span:first-child img {
+    width: 19px;
+    height: 19px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:first-child > div > span:last-child {
+    font-size: 7px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:nth-child(4) > span {
+    padding: 4px 5px;
+    font-size: 7px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-table td:nth-child(5) > span {
+    gap: 3px;
+    font-size: 7px;
+  }
+
+  .ms-phone-overview .ms-phone-disease-panel > div:nth-child(2) > button {
+    margin-top: 5px;
+    font-size: 7px;
+    line-height: 9px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-items {
+    padding-right: 6px;
+    padding-left: 6px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card {
+    height: 105px;
+    gap: 5px;
+    padding: 7px 5px;
+    border-radius: 8px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card > span:first-child {
+    width: 6px;
+    height: 6px;
+    margin-top: 3px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card > div {
+    margin-left: 3px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card > div > div:first-child {
+    gap: 2px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card p:first-child {
+    padding-right: 0;
+    font-size: 7px;
+    line-height: 10px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card > div > div:first-child > span {
+    padding: 4px 4px;
+    font-size: 6px;
+  }
+
+  .ms-phone-overview .ms-phone-alert-card p:nth-child(2),
+  .ms-phone-overview .ms-phone-alert-card p:nth-child(3) {
+    margin-top: 5px;
+    font-size: 7px;
+    line-height: 10px;
+  }
+
+  .ms-phone-overview .ms-phone-risk-panel > button {
+    width: calc(100% - 12px);
+    height: 82px;
+    margin: 5px 6px 0;
+  }
+
+  .ms-phone-overview .ms-phone-risk-legend {
+    gap: 2px;
+    padding: 5px 6px 0;
+    font-size: 6px;
+    line-height: 8px;
+  }
+
+  .ms-phone-overview .ms-phone-risk-legend span {
+    gap: 2px;
+  }
+
+  .ms-phone-overview .ms-phone-risk-legend i {
+    width: 6px;
+    height: 6px;
+  }
+
+  .ms-phone-overview .ms-phone-pulse {
+    height: 164px;
+    min-height: 0;
+    border-radius: 12px;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-timeline {
+    height: 112px;
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-events {
+    width: 100%;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    padding-right: 0;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-event > div:first-child {
+    gap: 3px;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-event > div:first-child > span:nth-child(2) {
+    font-size: 7px;
+    white-space: nowrap;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-event > div:nth-child(2) {
+    margin-top: 5px;
+    margin-left: 5px;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-event > div:nth-child(2) > div:first-child {
+    font-size: 7px;
+    line-height: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-event > div:nth-child(2) > div:nth-child(2) {
+    margin-top: 4px;
+    font-size: 6px;
+    line-height: 9px;
+    overflow-wrap: anywhere;
+  }
+
+  .ms-phone-overview .ms-phone-pulse-art,
+  .ms-phone-overview .ms-phone-pulse-timeline > div:first-child {
+    display: none;
+  }
+}

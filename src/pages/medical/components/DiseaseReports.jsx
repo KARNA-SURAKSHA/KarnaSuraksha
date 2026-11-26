@@ -56,6 +56,18 @@ const DISEASE_META = {
   },
 };
 
+const KODAGU_TALUKS = [
+  "Virajpet",
+  "Madikeri",
+  "Kushalnagar",
+  "Somwarpet",
+  "Ponnampet",
+];
+
+const sameTaluk = (left, right) =>
+  String(left || "").trim().toLowerCase() ===
+  String(right || "").trim().toLowerCase();
+
 /* ============================================================
    DATE HELPERS
 ============================================================ */
@@ -2013,6 +2025,15 @@ export default function DiseaseReports({
     overview?.locations || [];
 
   const taluks = useMemo(() => {
+    const normalizedDistrict = districtName
+      .trim()
+      .toLowerCase()
+      .replace(/\s+district$/, "");
+
+    if (normalizedDistrict === "kodagu") {
+      return KODAGU_TALUKS;
+    }
+
     const fromOverview =
       locations
         .map(
@@ -2038,6 +2059,7 @@ export default function DiseaseReports({
   }, [
     locations,
     reports,
+    districtName,
   ]);
 
   /* ==========================================================
@@ -2058,14 +2080,15 @@ export default function DiseaseReports({
       );
 
     return taluks
-      .slice(0, 3)
       .map(
         (talukName) => {
           const currentRows =
             reports.filter(
               (report) =>
-                report.taluk_name ===
-                  talukName &&
+                sameTaluk(
+                  report.taluk_name,
+                  talukName
+                ) &&
                 (
                   !currentWeek ||
                   Number(
@@ -2077,8 +2100,10 @@ export default function DiseaseReports({
           const previousRows =
             reports.filter(
               (report) =>
-                report.taluk_name ===
-                  talukName &&
+                sameTaluk(
+                  report.taluk_name,
+                  talukName
+                ) &&
                 (
                   !previousWeek ||
                   Number(
@@ -2165,8 +2190,10 @@ export default function DiseaseReports({
               ?.agent_name ||
             reports.find(
               (report) =>
-                report.taluk_name ===
-                talukName
+                sameTaluk(
+                  report.taluk_name,
+                  talukName
+                )
             )?.agent_name ||
             "—";
 
@@ -2272,8 +2299,10 @@ export default function DiseaseReports({
           (
             taluk ===
               "All Taluks" ||
-            report.taluk_name ===
+            sameTaluk(
+              report.taluk_name,
               taluk
+            )
           ) &&
 
           statusOk &&
@@ -2984,6 +3013,7 @@ export default function DiseaseReports({
       <div
         className="
           grid
+          grid-cols-2
           gap-4
           lg:grid-cols-3
         "
@@ -3040,6 +3070,7 @@ export default function DiseaseReports({
         <div
           className="
             grid
+            grid-cols-2
             gap-2.5
             xl:grid-cols-[1.45fr_.72fr_.72fr_.72fr_1fr]
           "
@@ -3048,6 +3079,8 @@ export default function DiseaseReports({
 
           <label
             className="
+              col-span-2
+              xl:col-span-1
               flex
               h-11
               items-center

@@ -17,6 +17,7 @@ import {
   MapPinned,
   Menu,
   BarChart3,
+  X,
   UserRoundCog,
 } from "lucide-react";
 
@@ -27,8 +28,12 @@ import {
 import medicalDoctor from "../../../assets/ui/medical-doctor.png";
 
 import supervisorLogo from "../../../assets/ui/medical-supervisor-logo.png";
+import emblem from "../../../assets/landing/emblem.png";
 
 import NotificationManager from "../../../components/notifications/NotificationManager";
+import AgentFooter from "../../../components/AgentFooter";
+
+import "./MedicalSupervisorLayout.css";
 
 
 // ============================================================
@@ -338,6 +343,7 @@ export default function MedicalSupervisorLayout({
 
     <div
       className="
+        ms-supervisor-shell
         min-h-screen
         w-full
         bg-[#FBFCFB]
@@ -685,6 +691,7 @@ export default function MedicalSupervisorLayout({
 
       <header
         className="
+          ms-supervisor-header
           fixed
           left-0
           right-0
@@ -700,6 +707,7 @@ export default function MedicalSupervisorLayout({
 
         <div
           className="
+            ms-supervisor-header-inner
             flex
             h-full
             items-center
@@ -707,6 +715,14 @@ export default function MedicalSupervisorLayout({
             px-[28px]
           "
         >
+
+          <div className="ms-mobile-brand">
+            <img src={emblem} alt="Karna Suraksha" />
+            <div>
+              <strong>Karna Suraksha</strong>
+              <span>Disease Surveillance Platform</span>
+            </div>
+          </div>
 
           {/* ==================================================
               MENU
@@ -724,6 +740,7 @@ export default function MedicalSupervisorLayout({
             }
             aria-label="Toggle navigation"
             className="
+              ms-supervisor-menu
               flex
               h-[40px]
               w-[40px]
@@ -736,10 +753,11 @@ export default function MedicalSupervisorLayout({
             "
           >
 
-            <Menu
-              size={25}
-              strokeWidth={1.7}
-            />
+            {mobileOpen ? (
+              <X size={21} strokeWidth={1.8} />
+            ) : (
+              <Menu size={23} strokeWidth={1.8} />
+            )}
 
           </button>
 
@@ -750,6 +768,7 @@ export default function MedicalSupervisorLayout({
 
           <div
             className="
+              ms-supervisor-header-controls
               flex
               items-center
               gap-[14px]
@@ -880,6 +899,7 @@ export default function MedicalSupervisorLayout({
               }
               aria-label="Notifications"
               className="
+                ms-supervisor-notifications
                 relative
                 flex
                 h-[40px]
@@ -925,6 +945,7 @@ export default function MedicalSupervisorLayout({
                   )
                 }
                 className="
+                  ms-supervisor-profile-button
                   flex
                   items-center
                   gap-[9px]
@@ -943,6 +964,7 @@ export default function MedicalSupervisorLayout({
                   alt="Medical Supervisor"
                   draggable="false"
                   className="
+                    ms-supervisor-profile-avatar
                     h-[42px]
                     w-[42px]
                     rounded-full
@@ -996,13 +1018,11 @@ export default function MedicalSupervisorLayout({
 
 
                 <ChevronDown
+                  className={`ms-supervisor-profile-chevron ${
+                    profileOpen ? "rotate-180 transition-transform" : "transition-transform"
+                  }`}
                   size={15}
                   strokeWidth={1.8}
-                  className={
-                    profileOpen
-                      ? "rotate-180 transition-transform"
-                      : "transition-transform"
-                  }
                 />
 
               </button>
@@ -1029,81 +1049,6 @@ export default function MedicalSupervisorLayout({
                     shadow-[0_18px_45px_rgba(16,42,67,.14)]
                   "
                 >
-
-                  <div
-                    className="
-                      border-b
-                      border-[#E7ECE9]
-                      bg-[#F6FBF7]
-                      p-[16px]
-                    "
-                  >
-
-                    <div
-                      className="
-                        flex
-                        items-center
-                        gap-[12px]
-                      "
-                    >
-
-                      <img
-                        src={
-                          medicalDoctor
-                        }
-                        alt=""
-                        className="
-                          h-[44px]
-                          w-[44px]
-                          rounded-full
-                          bg-[#EAF6EE]
-                          object-cover
-                        "
-                      />
-
-
-                      <div
-                        className="
-                          min-w-0
-                        "
-                      >
-
-                        <div
-                          className="
-                            truncate
-                            text-[13px]
-                            font-semibold
-                            text-[#17233D]
-                          "
-                        >
-
-                          {
-                            fullName
-                          }
-
-                        </div>
-
-
-                        <div
-                          className="
-                            mt-[3px]
-                            text-[10px]
-                            text-[#718096]
-                          "
-                        >
-
-                          {
-                            role
-                          }
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
 
                   <div
                     className="
@@ -1224,172 +1169,8 @@ export default function MedicalSupervisorLayout({
                     </div>
 
 
-                    {/* ALERTS */}
-
-                    <div
-                      className="
-                        flex
-                        items-center
-                        gap-[12px]
-                        rounded-[9px]
-                        p-[10px]
-                      "
-                    >
-
-                      <Bell
-                        size={17}
-                        className="
-                          text-[#315C88]
-                        "
-                      />
-
-
-                      <div>
-
-                        <div
-                          className="
-                            text-[9px]
-                            font-bold
-                            uppercase
-                            tracking-[.08em]
-                            text-[#8A93A3]
-                          "
-                        >
-
-                          Alerts
-
-                        </div>
-
-
-                        <div
-                          className="
-                            text-[12px]
-                            font-medium
-                            text-[#17233D]
-                          "
-                        >
-
-                          {
-                            alertCount ||
-                            0
-                          }{" "}
-
-                          active
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-
-                    {/* NOTIFICATIONS */}
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        selectTab(
-                          "notifications"
-                        )
-                      }
-                      className="
-                        flex
-                        w-full
-                        items-center
-                        gap-[12px]
-                        rounded-[9px]
-                        p-[10px]
-                        text-left
-                        transition
-                        hover:bg-[#F5F9F6]
-                      "
-                    >
-
-                      <Bell
-                        size={17}
-                        className="
-                          text-[#087A32]
-                        "
-                      />
-
-
-                      <div>
-
-                        <div
-                          className="
-                            text-[9px]
-                            font-bold
-                            uppercase
-                            tracking-[.08em]
-                            text-[#8A93A3]
-                          "
-                        >
-
-                          Notifications
-
-                        </div>
-
-
-                        <div
-                          className="
-                            text-[12px]
-                            font-medium
-                            text-[#17233D]
-                          "
-                        >
-
-                          View published notifications
-
-                        </div>
-
-                      </div>
-
-                    </button>
-
                   </div>
 
-
-                  {/* LOGOUT */}
-
-                  <div
-                    className="
-                      border-t
-                      border-[#E7ECE9]
-                      p-[12px]
-                    "
-                  >
-
-                    <button
-                      type="button"
-                      onClick={
-                        onExit
-                      }
-                      className="
-                        flex
-                        w-full
-                        items-center
-                        gap-[8px]
-                        rounded-[9px]
-                        px-[12px]
-                        py-[10px]
-                        text-left
-                        text-[12px]
-                        font-semibold
-                        text-[#C62828]
-                        transition
-                        hover:bg-[#FFF4F4]
-                      "
-                    >
-
-                      <LogOut
-                        size={16}
-                      />
-
-                      Logout
-
-                    </button>
-
-                  </div>
 
                 </div>
 
@@ -1436,6 +1217,7 @@ export default function MedicalSupervisorLayout({
 
       <main
         className="
+          ms-supervisor-main
           min-h-screen
           bg-[#FBFCFB]
           pt-[89px]
@@ -1445,6 +1227,7 @@ export default function MedicalSupervisorLayout({
 
         <div
           className="
+            ms-supervisor-main-inner
             w-full
             px-[30px]
             py-[18px]
@@ -1475,6 +1258,10 @@ export default function MedicalSupervisorLayout({
         </div>
 
       </main>
+
+      <div className="ms-supervisor-mobile-footer">
+        <AgentFooter />
+      </div>
 
     </div>
 

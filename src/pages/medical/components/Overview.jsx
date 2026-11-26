@@ -6,6 +6,7 @@ import {
   ArrowDownRight,
   ArrowUpRight,
   BarChart3,
+  Bell,
   ClipboardList,
   MapPin,
   Users,
@@ -230,6 +231,7 @@ function AlertCard({
       type="button"
       onClick={onOpen}
       className={`
+        ms-phone-alert-card
         group
         flex
         h-[116px]
@@ -326,6 +328,7 @@ function PulseItem({
   return (
     <div
       className="
+        ms-phone-pulse-event
         relative
         min-w-0
       "
@@ -601,15 +604,15 @@ export default function Overview({
 
 
   return (
-    <div className="w-full text-[#101B38]">
+    <div className="ms-phone-overview w-full text-[#101B38]">
 
       {/* ======================================================
           HERO
       ====================================================== */}
 
-      <section className="relative mb-[20px] h-[106px] w-full overflow-hidden rounded-[13px] bg-white">
+      <section className="ms-phone-hero relative mb-[20px] h-[106px] w-full overflow-hidden rounded-[13px] bg-white">
 
-        <div className="relative z-10 px-[8px] pt-[3px]">
+        <div className="ms-phone-hero-copy relative z-10 px-[8px] pt-[3px]">
 
           <h1 className="m-0 text-[24px] font-semibold leading-[32px] tracking-[-0.035em] text-[#101B38]">
 
@@ -650,6 +653,7 @@ export default function Overview({
           alt=""
           draggable="false"
           className="
+            ms-phone-skyline
             pointer-events-none
             absolute
             bottom-0
@@ -669,7 +673,7 @@ export default function Overview({
           KPI CARDS
       ====================================================== */}
 
-      <section className="mb-[18px] grid w-full grid-cols-4 gap-[14px]">
+      <section className="ms-phone-kpis mb-[18px] grid w-full grid-cols-4 gap-[14px]">
 
         {kpis.map((item) => {
 
@@ -695,6 +699,7 @@ export default function Overview({
                   : undefined
               }
               className={`
+                ms-phone-kpi
                 flex
                 h-[154px]
                 items-center
@@ -818,18 +823,19 @@ export default function Overview({
           THREE COLUMN CONTENT
       ====================================================== */}
 
-      <section className="mb-[15px] grid h-[382px] w-full grid-cols-[1.43fr_.99fr_.92fr] gap-[14px]">
+      <section className="ms-phone-panels mb-[15px] grid h-[382px] w-full grid-cols-[1.43fr_.99fr_.92fr] gap-[14px]">
 
 
         {/* ====================================================
             DISEASE OVERVIEW
         ==================================================== */}
 
-        <section className="overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
+        <section className="ms-phone-disease-panel overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
 
-          <div className="flex h-[51px] items-center justify-between px-[20px]">
+          <div className="ms-phone-panel-header flex h-[51px] items-center justify-between px-[20px]">
 
-            <h2 className="text-[11px] font-medium tracking-[-.01em] text-[#111820]">
+            <h2 className="flex items-center gap-[5px] text-[11px] font-medium tracking-[-.01em] text-[#111820]">
+              <Activity size={17} className="text-[#087A32]" />
               DISEASE OVERVIEW
             </h2>
 
@@ -847,7 +853,7 @@ export default function Overview({
 
           <div className="px-[18px]">
 
-            <table className="w-full table-fixed border-collapse text-left">
+            <table className="ms-phone-disease-table w-full table-fixed border-collapse text-left">
 
               <thead>
 
@@ -1052,11 +1058,12 @@ export default function Overview({
             RECENT ALERTS
         ==================================================== */}
 
-        <section className="overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
+        <section className="ms-phone-alerts-panel overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
 
-          <div className="flex h-[51px] items-center justify-between px-[20px]">
+          <div className="ms-phone-panel-header flex h-[51px] items-center justify-between px-[20px]">
 
-            <h2 className="text-[11px] font-medium tracking-[-.01em] text-[#111820]">
+            <h2 className="flex items-center gap-[5px] text-[11px] font-medium tracking-[-.01em] text-[#111820]">
+              <Bell size={15} />
               RECENT ALERTS
             </h2>
 
@@ -1072,7 +1079,7 @@ export default function Overview({
           </div>
 
 
-          <div className="space-y-[10px] px-[11px]">
+          <div className="ms-phone-alert-items space-y-[10px] px-[11px]">
 
             {alerts
               .slice(0, 2)
@@ -1098,9 +1105,9 @@ export default function Overview({
             RISK MAP
         ==================================================== */}
 
-        <section className="overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
+        <section className="ms-phone-risk-panel overflow-hidden rounded-[13px] border border-[#E7ECEA] bg-white">
 
-          <div className="flex h-[51px] items-center justify-between px-[13px] pl-[15px]">
+          <div className="ms-phone-panel-header flex h-[51px] items-center justify-between px-[13px] pl-[15px]">
 
             <h2 className="flex items-center gap-[6px] text-[11px] font-medium tracking-[-.01em] text-[#111820]">
 
@@ -1141,7 +1148,7 @@ export default function Overview({
           </button>
 
 
-          <div className="flex items-center justify-between px-[15px] pt-[9px] text-[8px] text-[#52627D]">
+          <div className="ms-phone-risk-legend flex items-center justify-between px-[15px] pt-[9px] text-[8px] text-[#52627D]">
 
             {[
               "Low",
@@ -1194,6 +1201,7 @@ export default function Overview({
 
       <section
         className="
+          ms-phone-pulse
           relative
           h-[200px]
           w-full
@@ -1207,7 +1215,7 @@ export default function Overview({
 
         {/* HEADER */}
 
-        <div className="flex h-[52px] items-center justify-between px-[20px]">
+        <div className="ms-phone-panel-header flex h-[52px] items-center justify-between px-[20px]">
 
           <h2 className="flex items-center gap-[7px] text-[11px] font-medium tracking-[-.01em] text-[#111820]">
 
@@ -1239,7 +1247,7 @@ export default function Overview({
 
         {/* TIMELINE */}
 
-        <div className="relative h-[148px] px-[20px]">
+        <div className="ms-phone-pulse-timeline relative h-[148px] px-[20px]">
 
           {/* HORIZONTAL DOTTED LINE */}
 
@@ -1261,6 +1269,7 @@ export default function Overview({
 
           <div
             className="
+              ms-phone-pulse-events
               relative
               grid
               grid-cols-4
@@ -1292,6 +1301,7 @@ export default function Overview({
             alt=""
             draggable="false"
             className="
+              ms-phone-pulse-art
               pointer-events-none
               absolute
               bottom-[-13px]
