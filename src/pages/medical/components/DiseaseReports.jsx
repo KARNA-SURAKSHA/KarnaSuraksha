@@ -2021,24 +2021,17 @@ export default function DiseaseReports({
      TALUKS
   ========================================================== */
 
-  const locations =
-    overview?.locations || [];
-
   const taluks = useMemo(() => {
     const normalizedDistrict = districtName
       .trim()
       .toLowerCase()
       .replace(/\s+district$/, "");
 
-    if (normalizedDistrict === "kodagu") {
-      return KODAGU_TALUKS;
-    }
-
     const fromOverview =
-      locations
+      (overview?.locations || [])
         .map(
           (item) =>
-            item.taluk_name
+            item.taluk_name?.trim()
         )
         .filter(Boolean);
 
@@ -2046,18 +2039,33 @@ export default function DiseaseReports({
       reports
         .map(
           (item) =>
-            item.taluk_name
+            item.taluk_name?.trim()
         )
         .filter(Boolean);
 
-    return [
-      ...new Set([
-        ...fromOverview,
-        ...fromReports,
-      ]),
-    ].sort();
+    const names = [
+      ...(normalizedDistrict === "kodagu"
+        ? KODAGU_TALUKS
+        : []),
+      ...fromOverview,
+      ...fromReports,
+    ];
+    const uniqueTaluks = new Map();
+
+    names.forEach((name) => {
+      const key = String(name).trim().toLowerCase();
+      if (key && !uniqueTaluks.has(key)) {
+        uniqueTaluks.set(key, String(name).trim());
+      }
+    });
+
+    const result = [...uniqueTaluks.values()];
+
+    return normalizedDistrict === "kodagu"
+      ? result
+      : result.sort((left, right) => left.localeCompare(right));
   }, [
-    locations,
+    overview?.locations,
     reports,
     districtName,
   ]);

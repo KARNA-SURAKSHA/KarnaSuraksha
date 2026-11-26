@@ -1009,6 +1009,10 @@ export default function MedicalSupervisorPortal({
               data.reports
             }
 
+            overview={
+              data.overview
+            }
+
             onRefresh={() =>
               load(
                 true
